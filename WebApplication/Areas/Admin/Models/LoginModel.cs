@@ -10,6 +10,7 @@ namespace WebApplication.Areas.Admin.Models
     {
         [Required(ErrorMessage = "Please enter user name")]
         public string UserName { get; set; }
+
         [Required(ErrorMessage = "Please enter password")]
         public string PassWord { get; set; }
 

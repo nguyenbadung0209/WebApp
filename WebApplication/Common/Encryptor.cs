@@ -7,7 +7,7 @@ using System.Web;
 
 namespace WebApplication.Common
 {
-    public static  class Encryptor
+    public static class Encryptor
     {
         public static string MD5Hash(string text)
         {
