@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using WebApplication.Common;
+using OnlineShop.Common;
 
-namespace WebApplication.Areas.Admin.Controllers
+namespace OnlineShop.Areas.Admin.Controllers
 {
     public class BaseController : Controller
     {

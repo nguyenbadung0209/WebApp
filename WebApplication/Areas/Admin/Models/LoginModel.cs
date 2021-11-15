@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebApplication.Areas.Admin.Models
+namespace OnlineShop.Areas.Admin.Models
 {
     public class LoginModel
     {
         [Required(ErrorMessage = "Please enter user name")]
         public string UserName { get; set; }
+
         [Required(ErrorMessage = "Please enter password")]
         public string PassWord { get; set; }
 
