@@ -11,22 +11,29 @@ namespace Model.EF
     {
         public long ID { get; set; }
 
-        [StringLength(50)]
+        [Required(ErrorMessage = "Username is required")]
+        [StringLength(50, MinimumLength = 5)]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
             
-        [StringLength(32)]
+        [StringLength(32, MinimumLength = 5)]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
         [StringLength(20)]
         public string GroupID { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 
         [StringLength(50)]
         public string Address { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Email is required")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter the correct address")]
         public string Email { get; set; }
 
         [StringLength(50)]
