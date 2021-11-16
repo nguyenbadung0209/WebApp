@@ -53,7 +53,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Add user fail");
                 }
             }
-            return View("Index");
+            return View();
         }
 
         [HttpPost]
@@ -80,7 +80,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Update user fail");
                 }
             }
-            return View("Index");
+            return View();
         }
 
         [HttpDelete]
