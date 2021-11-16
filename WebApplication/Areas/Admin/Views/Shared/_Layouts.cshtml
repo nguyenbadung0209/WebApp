@@ -27,34 +27,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/Admin/Home/Index">
-                <div class="sidebar-brand-text mx-3">Trang chủ</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-
-            <li class="nav-item">
-                    <a class="nav-link" href="/Admin/User/Index">
-                        <span>User List</span>
-                    </a>    
-            </li>
-
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
+        @RenderPage("_Navigation.cshtml")
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -151,7 +124,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/assets/admin/js/sb-admin-2.min.js"></script>
-
+    @RenderSection("jsFooter", required: false)
 </body>
 
 </html>

@@ -51,7 +51,7 @@ namespace Model.Dao
                 model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
             }
 
-            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
         }
 
         public User GetById(string userName)
@@ -87,7 +87,14 @@ namespace Model.Dao
             }
         }
 
-       
+        public bool ChangeStatus(long id)
+        {
+            var user = db.Users.Find(id);
+            user.Status = !user.Status;
+            db.SaveChanges();
+            return user.Status;
+        }
+
 
         public bool Delete(int id)
         {

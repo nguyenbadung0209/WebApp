@@ -13,10 +13,10 @@ namespace OnlineShop.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         // GET: Admin/User
-        public ActionResult Index(string searchString,int page = 1, int pageSize = 5)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
         {
             var dao = new UserDao();
-            var model = dao.ListAllPaging(searchString ,page , pageSize);
+            var model = dao.ListAllPaging(searchString, page, pageSize);
             ViewBag.SearchString = searchString;
             return View(model);
         }
@@ -45,7 +45,7 @@ namespace OnlineShop.Areas.Admin.Controllers
 
                 long id = dao.Insert(user);
                 if (id > 0)
-                {
+                {   
                     return RedirectToAction("Index", "User");
                 }
                 else
@@ -60,7 +60,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         public ActionResult Edit(User user)
         {
             if (ModelState.IsValid)
-            {   
+            {
                 var dao = new UserDao();
 
                 if (!string.IsNullOrEmpty(user.Password))
@@ -89,6 +89,13 @@ namespace OnlineShop.Areas.Admin.Controllers
             new UserDao().Delete(id);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(long id)
+        {
+            var result = new UserDao().ChangeStatus(id);
+            return Json(new {status = result });
         }
     }
 }

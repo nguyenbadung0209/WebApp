@@ -56,7 +56,7 @@ namespace OnlineShop.Areas.Admin.Controllers
 
         public ActionResult Logout()
         {
-            Session.Abandon();
+            Session.Remove(CommonConstanst.USER_SESSION);
             return RedirectToAction("Index","Login");
         }
     }
