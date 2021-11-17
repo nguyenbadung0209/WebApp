@@ -47,6 +47,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                     long id = dao.Insert(user);
                     if (id > 0)
                     {
+                        //SetAlert("Created Successfully", "success");
                         TempData["SuccessMessage"] = "User " + user.Name + " Created Successfully";
                         return RedirectToAction("Index", "User");
                     }
@@ -77,6 +78,7 @@ namespace OnlineShop.Areas.Admin.Controllers
 
                 if (result)
                 {
+                    //SetAlert("Saved Successfully", "success");
                     TempData["SuccessMessage"] = "User " + user.Name + " Saved Successfully";
                     return RedirectToAction("Index", "User");
                 }
