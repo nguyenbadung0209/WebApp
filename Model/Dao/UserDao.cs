@@ -15,6 +15,7 @@ namespace Model.Dao
         {
             db = new OnlineShopDbContext();
         }
+
         public long Insert(User entity)
         {
             db.Users.Add(entity);

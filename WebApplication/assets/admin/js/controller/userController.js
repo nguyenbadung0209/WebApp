@@ -1,7 +1,6 @@
 ﻿var user = {
     init: function () {
         user.registerEvent();
-
     },
     registerEvent: function () {
         $('.btn-active').off('click').on('click', function (e) {

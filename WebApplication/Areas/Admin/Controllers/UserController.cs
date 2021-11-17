@@ -39,18 +39,22 @@ namespace OnlineShop.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-
-                var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
-                user.Password = encryptedMd5Pas;
-
-                long id = dao.Insert(user);
-                if (id > 0)
-                {   
-                    return RedirectToAction("Index", "User");
+                var username = dao.GetById(user.UserName);
+                if (username is null)
+                {
+                    var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                    user.Password = encryptedMd5Pas;
+                    long id = dao.Insert(user);
+                    if (id > 0)
+                    {
+                        TempData["SuccessMessage"] = "User " + user.Name + " Created Successfully";
+                        return RedirectToAction("Index", "User");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Add user fail");
+                    ModelState.AddModelError("", "The username is already taken");
+
                 }
             }
             return View();
@@ -73,6 +77,7 @@ namespace OnlineShop.Areas.Admin.Controllers
 
                 if (result)
                 {
+                    TempData["SuccessMessage"] = "User " + user.Name + " Saved Successfully";
                     return RedirectToAction("Index", "User");
                 }
                 else
@@ -87,7 +92,6 @@ namespace OnlineShop.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             new UserDao().Delete(id);
-
             return RedirectToAction("Index");
         }
 
@@ -95,7 +99,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         public JsonResult ChangeStatus(long id)
         {
             var result = new UserDao().ChangeStatus(id);
-            return Json(new {status = result });
+            return Json(new { status = result });
         }
     }
 }
