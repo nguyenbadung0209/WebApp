@@ -45,7 +45,8 @@ namespace OnlineShop.Areas.Admin.Controllers
 
                 long id = dao.Insert(user);
                 if (id > 0)
-                {   
+                {
+                    ModelState.AddModelError("", "Add user success");
                     return RedirectToAction("Index", "User");
                 }
                 else
