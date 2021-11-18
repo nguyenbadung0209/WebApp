@@ -25,7 +25,6 @@
                 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-3" })
-
                     @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
@@ -41,7 +40,6 @@
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
-
                     @Html.TextBoxFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
 
@@ -50,7 +48,6 @@
                 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
-
                     @Html.TextBoxFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
@@ -58,7 +55,6 @@
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
-
                     @Html.TextBoxFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
 
@@ -72,9 +68,9 @@
             }
         </div>
     </div>
-    </div>
-    </div>
-    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
 }
 
