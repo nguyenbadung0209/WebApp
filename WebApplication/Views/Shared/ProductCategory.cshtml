@@ -1,0 +1,10 @@
+﻿@model List<Model.EF.ProductCategory>
+
+<div class="col-lg-3">
+    <h1 class="h2 pb-4">Categories</h1>
+    <ul class="list-unstyled templatemo-accordion">
+        @foreach (var item in Model) {
+            <li><a href="/san-pham/@item.MetaTitle-@item.ID">@item.Name </a></li>
+        }
+    </ul>
+</div>
