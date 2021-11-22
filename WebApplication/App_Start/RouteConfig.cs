@@ -15,10 +15,38 @@ namespace OnlineShop
 
             routes.MapRoute(
                name: "Product Category",
-               url: "chi-tiet/{metatitle}-{cateId}",
+               url: "san-pham/{metatitle}-{cateId}",
                defaults: new { controller = "Product", action = "Category", id = UrlParameter.Optional },
                new[] { "OnlineShop.Controllers" }
            );
+
+            routes.MapRoute(
+               name: "Product Detail",
+               url: "chi-tiet/{metatitle}-{Id}",
+               defaults: new { controller = "Product", action = "Detail", id = UrlParameter.Optional },
+               new[] { "OnlineShop.Controllers" }
+           );
+
+            routes.MapRoute(
+              name: "About",
+              url: "gioi-thieu",
+              defaults: new { controller = "About", action = "Index", id = UrlParameter.Optional },
+              new[] { "OnlineShop.Controllers" }
+          );
+
+            routes.MapRoute(
+             name: "Shop",
+             url: "Shop",
+             defaults: new { controller = "Product", action = "Index", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Contact",
+             url: "Contact",
+             defaults: new { controller = "Contact", action = "Index", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
 
             routes.MapRoute(
                 name: "Default",
