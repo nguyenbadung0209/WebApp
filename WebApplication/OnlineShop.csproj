@@ -2185,7 +2185,6 @@
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\ProductCategory.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Product\Product.cshtml" />
     <Content Include="Views\Product\Category.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
