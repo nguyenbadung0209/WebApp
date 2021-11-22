@@ -16,9 +16,15 @@ namespace OnlineShop.Controllers
         }
 
         [ChildActionOnly]
-        public PartialViewResult ProductCategory() {
+        public PartialViewResult ProductCategory()
+        {
             var model = new ProductCategoryDao().ListAll();
             return PartialView(model);
+        }
+
+        public ActionResult Product(long cateId)
+        {
+            return View();
         }
     }
 }
