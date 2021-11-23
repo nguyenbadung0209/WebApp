@@ -2159,6 +2159,7 @@
     <Content Include="assets\client\webfonts\slick.eot" />
     <Content Include="assets\client\webfonts\slick.ttf" />
     <Content Include="assets\client\webfonts\slick.woff" />
+    <Content Include="Areas\Admin\Views\Shared\TopBar.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
