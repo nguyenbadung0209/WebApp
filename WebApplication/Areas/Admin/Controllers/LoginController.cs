@@ -55,10 +55,17 @@ namespace OnlineShop.Areas.Admin.Controllers
             return View("Index");
         }
 
+        //[ChildActionOnly]
+        //public PartialViewResult TopBar(string name)
+        //{
+        //    var dao = new UserDao().GetById(name);
+        //    return PartialView(dao);
+        //}
+
         public ActionResult Logout()
         {
             Session.Remove(CommonConstanst.USER_SESSION);
-            return RedirectToAction("Index","Login");
+            return RedirectToAction("Index", "Login");
         }
     }
 }

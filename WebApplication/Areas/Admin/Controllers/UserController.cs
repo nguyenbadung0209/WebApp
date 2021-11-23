@@ -102,6 +102,6 @@ namespace OnlineShop.Areas.Admin.Controllers
         {
             var result = new UserDao().ChangeStatus(id);
             return Json(new { status = result });
-        }
+        }   
     }
 }
