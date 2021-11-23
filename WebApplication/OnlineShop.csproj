@@ -1852,6 +1852,7 @@
     <Content Include="assets\client\css\slick.min.css" />
     <Content Include="assets\client\css\templatemo.css" />
     <Content Include="assets\client\css\templatemo.min.css" />
+    <Content Include="assets\client\images\37723601_l.jpg" />
     <Content Include="assets\client\images\about-hero.svg" />
     <Content Include="assets\client\images\about_img.jpg" />
     <Content Include="assets\client\images\ajax-loader.gif" />

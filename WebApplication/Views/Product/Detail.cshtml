@@ -194,7 +194,7 @@
 <section class="py-5">
     <div class="container">
         <div class="row text-left p-2 pb-3">
-            <h4><a href="/san-pham/@category.MetaTitle-@category.ID">Related Products : @category.Name</a></h4>
+            <h4><a href="/product/@category.MetaTitle-@category.ID">Related Products : @category.Name</a></h4>
         </div>
 
         <!--Start Carousel Wrapper-->
@@ -202,7 +202,7 @@
 
             @foreach (var item in relatedProducts)
             {
-                var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                var url = "/detail/" + item.MetaTitle + "-" + item.ID;
                 <div class="p-2 pb-3">
                     <div class="product-wap card rounded-0">
                         <div class="card rounded-0">

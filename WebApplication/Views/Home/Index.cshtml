@@ -93,15 +93,14 @@
         <div class="col-lg-6 m-auto">
             <h1 class="h1">Product New</h1>
             <p>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
+                These are our new product launches this month.
             </p>
         </div>
     </div>
     <div class="row">
         @foreach (var item in listNewProducts)
         {
-            var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+            var url = "/detail/" + item.MetaTitle + "-" + item.ID;
             <div class="col-12 col-md-4 p-5 mt-3">
                 <a href="@url"><img src="@item.Image" class="rounded-circle img-fluid border" alt="@item.Name"></a>
                 <h5 class="text-center mt-3 mb-3">@item.Name</h5>
@@ -118,15 +117,14 @@
             <div class="col-lg-6 m-auto">
                 <h1 class="h1">Featured Product</h1>
                 <p>
-                    Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident.
+                    These are our best sellers this month
                 </p>
             </div>
         </div>
         <div class="row">
             @foreach (var item in listFeatureProduct)
             {
-                var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                var url = "/detail/" + item.MetaTitle + "-" + item.ID;
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <a href="@url">
