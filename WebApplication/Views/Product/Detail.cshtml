@@ -156,12 +156,13 @@
                                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
                                 </div>
                                 <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+                                    @*<a href="/addcart?productId=@Model.ID&quantity=1"><button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button></a>*@
+                                    <h4><a href="/addcart?productId=@Model.ID&quantity=1">Add to cart</a></h4>
                                 </div>
                             </div>
                         </form>
 
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>

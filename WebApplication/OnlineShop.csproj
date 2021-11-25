@@ -135,12 +135,14 @@
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1958,6 +1960,7 @@
     <Content Include="assets\client\images\wishlist.png" />
     <Content Include="assets\client\js\bootstrap.bundle.min.js" />
     <Content Include="assets\client\js\bootstrap.min.js" />
+    <Content Include="assets\client\js\controller\cartController.js" />
     <Content Include="assets\client\js\custom.js" />
     <Content Include="assets\client\js\jquery-1.11.0.min.js" />
     <Content Include="assets\client\js\jquery-migrate-1.2.1.min.js" />
@@ -2238,12 +2241,12 @@
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
