@@ -15,7 +15,7 @@ namespace Model.EF
         [StringLength(50, MinimumLength = 5)]
         [Display(Name = "Username")]
         public string UserName { get; set; }
-            
+        // co ky tu dac biet,viet hoa,toi da 6    
         [StringLength(32, MinimumLength = 5)]
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }

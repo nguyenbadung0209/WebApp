@@ -19,7 +19,10 @@ namespace Model.Dao
         {
             return db.Products.OrderByDescending(x => x.CreatedDate).Take(top).ToList();
         }
-
+        public List<Product> ListByCategoryId(long categoryID,ref int totalRecord, int page = 1, int pageSize = 2)
+        {
+            return db.Products.Where(x => x.CategoryID == categoryID).OrderByDescending(x=>x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
         public List<Product> ListFeatureProduct(int top)
         {
             return db.Products.Where(x => x.TopHot != null && x.TopHot > DateTime.Now).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
