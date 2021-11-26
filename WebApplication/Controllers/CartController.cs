@@ -8,7 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Model.EF;
-
+using System.Configuration;
+using Common;
 
 namespace OnlineShop.Controllers
 {
@@ -134,7 +135,18 @@ namespace OnlineShop.Controllers
 
                     total += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
                 }
-                
+                string content = System.IO.File.ReadAllText(Server.MapPath("/assets/client/template/neworder.html"));
+
+                content = content.Replace("{{CustomerName}}", shipName);
+                content = content.Replace("{{Phone}}", mobile);
+                content = content.Replace("{{Email}}", email);
+                content = content.Replace("{{Address}}", address);
+                content = content.Replace("{{Total}}", total.ToString("N0"));
+                var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
+
+                new MailHelper().SendMail(email, "New Order from OnlineShop", content);
+                new MailHelper().SendMail(toEmail, "New Order from OnlineShop", content);
+
             }
             catch (Exception ex)
             {

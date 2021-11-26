@@ -1968,6 +1968,7 @@
     <Content Include="assets\client\js\slick.min.js" />
     <Content Include="assets\client\js\templatemo.js" />
     <Content Include="assets\client\js\templatemo.min.js" />
+    <Content Include="assets\client\template\neworder.html" />
     <Content Include="assets\client\webfonts\fa-brands-400.svg" />
     <Content Include="assets\client\webfonts\fa-regular-400.svg" />
     <Content Include="assets\client\webfonts\fa-solid-900.svg" />
@@ -2280,6 +2281,10 @@
     <Content Include="Scripts\jquery-3.6.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{334ef732-d352-4e1b-860e-4fc62ee8a761}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{f1d01f6f-9b90-4acb-ab60-c82f13948f31}</Project>
       <Name>Model</Name>
