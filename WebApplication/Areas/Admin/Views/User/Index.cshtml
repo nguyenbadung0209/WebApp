@@ -12,6 +12,7 @@
 
 
 
+
     <div class="panel panel-default">
         <div class="panel-heading">
             User List
@@ -37,6 +38,8 @@
                     <div class="col-8">
                         <button type="submit" class="btn btn-success">Search</button>
                         <a class="btn btn-primary" href="/Admin/User/Create">Add new</a>
+                        <input id="btnSubmit" class="btn btn-danger" type="submit" value="Delete selected" />
+
                     </div>
                 </div>
             }
@@ -45,7 +48,7 @@
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-
+                                <th><input type="checkbox" id="checkAll" /></th>
                                 <th>Username</th>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -58,7 +61,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr id="row_@item.ID">
-
+                                    <td><input type="checkbox" name="userDelete" id="userDelete" value="@item.ID" /></td>
                                     <td>@item.UserName</td>
                                     <td>@item.Name</td>
                                     <td>@item.Email</td>
@@ -95,13 +98,43 @@
             myDiv.innerHTML = strMessage;
             $('#myModalSuccess').modal('show');
         }
-
         $(document).ready(function () {
             var msg = "@TempData["SuccessMessage"]";
             if (msg)
                 openSuccessModal(msg);
         });
     </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#checkAll").click(function () {
+                $("input[name='userDelete']").prop("checked", this.checked);
+
+                $("input[name='userDelete']").click(function () {
+                    if ($("input[name='userDelete']").length == $("input[name='userDelete']:checked").length) {
+                        $("#checkAll").prop("checked", "checked");
+                    }
+                    else {
+                        $("#checkAll").removeProp("checked");
+                    }
+                });
+
+            });
+
+            $("#btnSubmit").click(function () {
+                var count = $("input[name='userDelete']:checked").length;
+                if (count == 0) {
+                    alert("No rows selected to delete");
+                    return false;
+                }
+                else {
+                    return confirm(count + " row(s) will be deleted");
+                }
+            });
+        });
+    </script>
+
 
     <script src="~/assets/admin/js/controller/userController.js"></script> }
 
