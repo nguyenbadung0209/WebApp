@@ -153,11 +153,12 @@
                             </div>
                             <div class="row pb-3">
                                 <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
+                                    
+                                    <input type=button onClick="parent.location='/addcart?productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Buy"></input>
                                 </div>
                                 <div class="col d-grid">
-                                    @*<a href="/addcart?productId=@Model.ID&quantity=1"><button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button></a>*@
-                                    <h4><a href="/addcart?productId=@Model.ID&quantity=1">Add to cart</a></h4>
+
+                                    <input type=button onClick="parent.location='/addcart?productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Add to Cart"></input>
                                 </div>
                             </div>
                         </form>
