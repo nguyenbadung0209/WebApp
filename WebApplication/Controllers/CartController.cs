@@ -148,7 +148,7 @@ namespace OnlineShop.Controllers
                 new MailHelper().SendMail(toEmail, "New Order from OnlineShop", content);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Redirect("/Error");
             }
