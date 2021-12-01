@@ -11,39 +11,40 @@ namespace OnlineShop.Models
         [Key]
         public long ID { set; get; }
 
-        [Display(Name = "Tên đăng nhập")]
-        [Required(ErrorMessage = "Yêu cầu nhập tên đăng nhập")]
 
+        [Required(ErrorMessage = "Username is required")]
+        [StringLength(50, MinimumLength = 5)]
         public string UserName { set; get; }
 
-        [Display(Name = "Mật khẩu")]
-        [StringLength(20, MinimumLength = 6, ErrorMessage = "Độ dài mật khẩu ít nhất 6 ký tự.")]
-        [Required(ErrorMessage = "Yêu cầu nhập mật khẩu")]
+        
+        [StringLength(32, MinimumLength = 5, ErrorMessage = "Password length is at least 6 characters.")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { set; get; }
 
-        [Display(Name = "Xác nhận mật khẩu")]
-        [Compare("Password", ErrorMessage = "Xác nhận mật khẩu không đúng.")]
+        
+        [Compare("Password", ErrorMessage = "Password was wrong!")]
         public string ConfirmPassword { set; get; }
 
-        [Display(Name = "Họ tên")]
-        [Required(ErrorMessage = "Yêu cầu nhập họ tên")]
+        [Required(ErrorMessage = "Name is required")]
         public string Name { set; get; }
 
-        [Display(Name = "Địa chỉ")]
+        
         public string Address { set; get; }
 
+        [StringLength(50)]
         [Required(ErrorMessage = "Yêu cầu nhập email")]
-        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter the correct address")]
         public string Email { set; get; }
 
-        [Display(Name = "Điện thoại")]
+        
         public string Phone { set; get; }
 
-        [Display(Name = "Tỉnh/thành")]
+        
         public string ProvinceID { set; get; }
 
 
-        [Display(Name = "Quận/Quyện")]
+        
         public string DistrictID { set; get; }
     }
 }
