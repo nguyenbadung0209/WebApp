@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using OnlineShop.Common;
 using PagedList;
+using System.Web.Script.Serialization;
 
 namespace OnlineShop.Areas.Admin.Controllers
 {
@@ -98,10 +99,27 @@ namespace OnlineShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        public JsonResult DeleteSelectedCheckbox(string data)
+        {
+            
+            foreach (var id in data)
+            {
+                var user = new UserDao().ViewDatail(Convert.ToInt32(id));
+                new UserDao().Delete(Convert.ToInt32(user.ID));
+            }
+            
+            return Json(new { status = true });
+        }
+
+        
+
+        [HttpPost]
         public JsonResult ChangeStatus(long id)
         {
             var result = new UserDao().ChangeStatus(id);
             return Json(new { status = result });
-        }   
+        }
+
+        
     }
 }
