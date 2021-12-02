@@ -32,7 +32,7 @@ namespace OnlineShop.Models
         public string Address { set; get; }
 
         [StringLength(50)]
-        [Required(ErrorMessage = "Yêu cầu nhập email")]
+        [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter the correct address")]
         public string Email { set; get; }

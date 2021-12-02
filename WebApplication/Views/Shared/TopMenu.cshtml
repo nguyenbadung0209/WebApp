@@ -8,8 +8,26 @@
         <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">0981789567</a>
     </div>
     <div>
-        @foreach (var item in Model) {
-            <a href="@item.Link" target="@item.Target">@item.Text</a>
+
+        @{
+            var session = (OnlineShop.Common.UserLogin)Session[OnlineShop.Common.CommonConstanst.USER_SESSION];
+        }
+        @if (session == null)
+        {
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li><a href="@item.Link" target="@item.Target">@item.Text</a></li>
+                }
+
+            </ul>
+        }
+        else
+        {
+            <ul>
+                <li>Hello : @session.UserName</li>
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
         }
 
         |
