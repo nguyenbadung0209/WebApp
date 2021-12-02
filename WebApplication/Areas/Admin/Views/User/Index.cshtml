@@ -33,7 +33,7 @@
                     <div class="col-8">
                         <button type="submit" class="btn btn-success">Search</button>
                         <a class="btn btn-primary" href="/Admin/User/Create">Add new</a>
-                        <input id="btnSubmit" class="btn btn-danger" type="submit" value="Delete selected"/>
+                        <input id="btnDelete" class="btn btn-danger" type="submit" value="Delete selected"/>
 
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                                     <td>@item.Name</td>
                                     <td>@item.Email</td>
                                     <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
-
+                                        
                                     <td>
                                         <a href="/Admin/User/Edit/@item.ID">Edit</a>
                                         |

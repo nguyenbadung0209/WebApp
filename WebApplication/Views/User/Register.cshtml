@@ -1,11 +1,12 @@
 ﻿@model OnlineShop.Models.RegisterModel
 
+
 @{
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="content">
-    @using (Html.BeginForm("Register","User",FormMethod.Post))
+    @using (Html.BeginForm("Register", "User", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 

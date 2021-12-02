@@ -4,22 +4,23 @@
     },
     registerEvent: function () {
 
-        $('#btnSubmit').off('click').on('click', function (e) {
+        $('#btnDelete').off('click').on('click', function (e) {
             e.preventDefault();
             var boxData = [];
             $("input[name='userDelete']:checked").each(function () {
                 boxData.push($(this).val());
             });
+           
             $.ajax({
-                
-                data: { data: JSON.stringify(boxData) },
-                url: 'Admin/User/DeleteSelectedCheckbox',
+
+                url: "DeleteSelectedCheckbox",
+                data: { data: boxData },
                 dataType: 'json',
                 type: 'POST',
                 success: function (res) {
                     if (res.status == true) {
-                        //window.location.href = "/user";
                         alert("Delete Success...");
+                        window.location.href = "Index";
                     } else {
                         alert("Delete Error...");
                     }
