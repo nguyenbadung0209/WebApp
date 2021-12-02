@@ -1,4 +1,5 @@
-﻿using Model.Dao;
+﻿using BotDetect.Web.Mvc;
+using Model.Dao;
 using Model.EF;
 using OnlineShop.Common;
 using OnlineShop.Models;
@@ -21,6 +22,7 @@ namespace OnlineShop.Controllers
         }
 
         [HttpPost]
+        [CaptchaValidation("CaptchaCode", "registerCapcha", "Incorrect code!")]
         
         public ActionResult Register(RegisterModel model)
         {
