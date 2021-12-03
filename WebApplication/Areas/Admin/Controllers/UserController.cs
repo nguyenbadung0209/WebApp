@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace OnlineShop.Areas.Admin.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         // GET: Admin/User
         public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
@@ -40,8 +40,16 @@ namespace OnlineShop.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-                var username = dao.GetById(user.UserName);
-                if (username is null)
+                
+                if (dao.CheckUserName(user.UserName))
+                {
+                    ModelState.AddModelError("", "The username is already taken");
+                }
+                else if (dao.CheckEmail(user.Email))
+                {
+                    ModelState.AddModelError("", "Email already exists");
+                }
+                else
                 {
                     var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
                     user.Password = encryptedMd5Pas;
@@ -53,11 +61,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                         return RedirectToAction("Index", "User");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "The username is already taken");
 
-                }
             }
             return View();
         }
@@ -109,7 +113,6 @@ namespace OnlineShop.Areas.Admin.Controllers
             return Json(new { status = true });
         }
 
-        
 
         [HttpPost]
         public JsonResult ChangeStatus(long id)
@@ -118,6 +121,6 @@ namespace OnlineShop.Areas.Admin.Controllers
             return Json(new { status = result });
         }
 
-        
+
     }
 }

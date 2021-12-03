@@ -102,8 +102,8 @@ namespace OnlineShop.Controllers
                     var result = dao.Insert(user);
                     if (result > 0)
                     {
+                        //return RedirectToAction("Index", "Home");
                         ViewBag.Success = "Register Success";
-                        model = new RegisterModel();
                     }
                     else
                     {
@@ -111,7 +111,7 @@ namespace OnlineShop.Controllers
                     }
                 }
             }
-            return View(model);
+            return View();
         }
     }
 }
