@@ -1,10 +1,12 @@
-﻿using Model.EF;
+﻿
+using Model.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.ViewModel;
+using PagedList;
 
 namespace Model.Dao
 {
@@ -14,6 +16,30 @@ namespace Model.Dao
         public ProductDao()
         {
             db = new OnlineShopDbContext();
+        }
+
+        public IEnumerable<ProductViewModel> ListAllPaging(string searchString, int page, int pageSize)
+        {
+            IQueryable<ProductViewModel> model = from a in db.Products
+                                                 join b in db.ProductCategories
+                                                 on a.CategoryID equals b.ID
+                                                 select new ProductViewModel()
+                                                 {
+                                                     CateMetaTitle = b.MetaTitle,
+                                                     CateName = b.Name,                                                  
+                                                     Status = b.Status,
+                                                     ID = a.ID,
+                                                     Name = a.Name,
+                                                     Code = a.Code,
+                                                     Price = a.Price,
+                                                     Quantity = a.Quantity
+                                                 };
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Name.Contains(searchString) || x.Code.Contains(searchString));
+            }
+
+            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
         }
 
         public List<Product> ListNewProduct(int top)
@@ -39,7 +65,7 @@ namespace Model.Dao
             //                MetaTitle = a.MetaTitle,
             //                Price = a.Price
             //            };
-            model.OrderByDescending(x=>x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+            model.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
             return model.ToList();
         }
 
