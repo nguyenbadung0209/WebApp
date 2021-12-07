@@ -36,7 +36,7 @@ namespace Model.Dao
                                                  };
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.Name.Contains(searchString) || x.Code.Contains(searchString));
+                model = model.Where(x => x.Name.Contains(searchString) || x.CateName.Contains(searchString));
             }
 
             return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
