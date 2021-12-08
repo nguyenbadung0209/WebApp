@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Model.ViewModel;
 using PagedList;
+using System.Globalization;
 
 namespace Model.Dao
 {
@@ -18,21 +19,70 @@ namespace Model.Dao
             db = new OnlineShopDbContext();
         }
 
+        public long Insert(Product entity)
+        {
+            db.Products.Add(entity);
+            db.SaveChanges();
+            return entity.ID;
+        }
+
+        public bool Update(Product entity)
+        {
+            try
+            {
+                var product = db.Products.Find(entity.ID);
+                product.Name = entity.Name;
+                product.Code = entity.Code;
+                product.MetaTitle = entity.MetaTitle;
+                product.Description = entity.Description;
+                product.Image = entity.Image;
+                product.MoreImages = entity.MoreImages;
+                product.Price = entity.Price;
+                product.PromotionPrice = entity.PromotionPrice;
+                product.IncludedVAT = entity.IncludedVAT;
+                product.Quantity = entity.Quantity;
+                product.CategoryID = entity.CategoryID;
+                product.Detail = entity.Detail;
+                product.Status = entity.Status;
+                product.TopHot = entity.TopHot;
+                product.ViewCount = entity.ViewCount;
+                product.ModifiedDate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                var product = db.Products.Find(id);
+                db.Products.Remove(product);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { return false; }
+
+        }
         public IEnumerable<ProductViewModel> ListAllPaging(string searchString, int page, int pageSize)
         {
-            IQueryable<ProductViewModel> model = from a in db.Products
-                                                 join b in db.ProductCategories
-                                                 on a.CategoryID equals b.ID
+            IQueryable<ProductViewModel> model = from product in db.Products
+                                                 join productCategory in db.ProductCategories
+                                                 on product.CategoryID equals productCategory.ID
                                                  select new ProductViewModel()
                                                  {
-                                                     CateMetaTitle = b.MetaTitle,
-                                                     CateName = b.Name,                                                  
-                                                     Status = b.Status,
-                                                     ID = a.ID,
-                                                     Name = a.Name,
-                                                     Code = a.Code,
-                                                     Price = a.Price,
-                                                     Quantity = a.Quantity
+                                                     CateMetaTitle = productCategory.MetaTitle,
+                                                     CateName = productCategory.Name,
+                                                     Status = productCategory.Status,
+                                                     ID = product.ID,
+                                                     Name = product.Name,
+                                                     Code = product.Code,
+                                                     Price = product.Price,
+                                                     Quantity = product.Quantity
                                                  };
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -83,6 +133,17 @@ namespace Model.Dao
         public Product ViewDetail(long id)
         {
             return db.Products.Find(id);
+        }
+
+
+        public bool CheckProductName(string Name)
+        {
+            return db.Products.Count(x => x.Name == Name) > 0;
+        }
+
+        public bool CheckProductCode(string Code)
+        {
+            return db.Products.Count(x => x.Code == Code) > 0;
         }
     }
 }

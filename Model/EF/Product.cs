@@ -10,16 +10,16 @@ namespace Model.EF
     public partial class Product
     {
         public long ID { get; set; }
-
+        [Required(ErrorMessage ="Name is requied")]
         [StringLength(250)]
         public string Name { get; set; }
-
+        [Required(ErrorMessage = "Code is requied")]
         [StringLength(10)]
         public string Code { get; set; }
-
+        [Required(ErrorMessage = "MetaTitle is requied")]
         [StringLength(250)]
         public string MetaTitle { get; set; }
-
+        [Required(ErrorMessage = "Description is requied")]
         [StringLength(500)]
         public string Description { get; set; }
 
@@ -28,13 +28,13 @@ namespace Model.EF
 
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
-
+        [Required(ErrorMessage = "Price is requied")]
         public decimal? Price { get; set; }
 
         public decimal? PromotionPrice { get; set; }
 
         public bool? IncludedVAT { get; set; }
-
+        [Required(ErrorMessage = "Quantity is requied")]
         public int Quantity { get; set; }
 
         public long? CategoryID { get; set; }

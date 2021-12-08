@@ -21,7 +21,8 @@
                     </div>
                     <div class="col-8">
                         <button type="submit" class="btn btn-success">Search</button>
-                        <a class="btn btn-primary" href="">Add new</a>
+                        <a class="btn btn-primary" href="/Admin/Product/Create">Add Product</a>
+                        <a class="btn btn-info" href="/Admin/Category/Create">Add Category Product</a>
                         <input id="btnDelete" class="btn btn-danger" type="submit" value="Delete" />
 
                     </div>
@@ -33,32 +34,32 @@
                         <thead>
                             <tr>
                                 <th><input type="checkbox" name="allcheck" id="checkAll" /></th>
+                                <th>Name</th>
                                 <th>NameCategory</th>
                                 <th>MetaTitle</th>
-                                <th>ID</th>
-                                <th>Name</th>
                                 <th>Code</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Status</th>
-                                
-
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr id="row_@item.ID">
-                                <td><input type="checkbox" name="userDelete" class="userDelete" value="@item.ID" /></td>
-                                <td>@item.CateName</td>
-                                <td>@item.CateMetaTitle</td>
-                                <td>@item.ID</td>
-                                <td>@item.Name</td>
-                                <td>@item.Code</td>
-                                <td>@item.Price</td>
-                                <td>@item.Quantity</td>
-                                <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
-                            </tr>
+                                <tr id="row_@item.ID">
+                                    <td><input type="checkbox" name="productDelete" class="productDelete" value="@item.ID" /></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.CateName</td>
+                                    <td>@item.CateMetaTitle</td>
+                                    <td>@item.Code</td>
+                                    <td>@item.Price</td>
+                                    <td>@item.Quantity</td>
+                                    <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
+                                    <td>
+                                        <a href="/Admin/Product/Edit/@item.ID">Edit</a>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -70,4 +71,46 @@
         <!-- /.panel-body -->
     </div>
 }
+@section JsFooter{
+
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+        }
+        $(document).ready(function () {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        $("#checkAll").click(function () {
+            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+        });
+
+        $("input[name='productDelete']").click(function () {
+            if (!$(this).prop("checked")) {
+                $("#checkAll").prop("checked", false);
+            }
+        });
+
+        $("input[name='productDelete']").click(function () {
+            if ($("input[name='productDelete']").length == $("input[name='productDelete']:checked").length) {
+                $("#checkAll").prop("checked", "checked");
+            }
+            else {
+                $("#checkAll").removeProp("checked");
+            }
+        });
+
+
+    </script>
+
+    <script src="/assets/admin/js/controller/productController.js"></script>
+}
+
 

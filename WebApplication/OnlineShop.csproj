@@ -171,6 +171,7 @@
     <Content Include="assets\admin\img\undraw_profile_2.svg" />
     <Content Include="assets\admin\img\undraw_profile_3.svg" />
     <Content Include="assets\admin\img\undraw_rocket.svg" />
+    <Content Include="assets\admin\js\controller\productController.js" />
     <Content Include="assets\admin\js\controller\userController.js" />
     <Content Include="assets\admin\js\demo\chart-area-demo.js" />
     <Content Include="assets\admin\js\demo\chart-bar-demo.js" />
@@ -2240,6 +2241,8 @@
     <Content Include="assets\client\css\bootstrap.rtl.css.map" />
     <Content Include="assets\client\css\bootstrap.rtl.min.css.map" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
