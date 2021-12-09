@@ -72,16 +72,16 @@ namespace Model.Dao
         {
             IQueryable<ProductViewModel> model = from product in db.Products
                                                  join productCategory in db.ProductCategories
-                                                 on product.CategoryID equals productCategory.ID
+                                                 on product.CategoryID equals productCategory.ID                                               
                                                  select new ProductViewModel()
                                                  {
                                                      CateMetaTitle = productCategory.MetaTitle,
                                                      CateName = productCategory.Name,
-                                                     Status = productCategory.Status,
+                                                     Status = product.Status,
                                                      ID = product.ID,
                                                      Name = product.Name,
-                                                     Code = product.Code,
-                                                     Price = product.Price,
+                                                     Code = product.Code,                                                    
+                                                     Price = product.Price,                                                    
                                                      Quantity = product.Quantity
                                                  };
             if (!string.IsNullOrEmpty(searchString))
@@ -89,7 +89,7 @@ namespace Model.Dao
                 model = model.Where(x => x.Name.Contains(searchString) || x.CateName.Contains(searchString));
             }
 
-            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x=>x.ID).ToPagedList(page, pageSize);
         }
 
         public List<Product> ListNewProduct(int top)
@@ -135,6 +135,12 @@ namespace Model.Dao
             return db.Products.Find(id);
         }
 
+        public bool ChangeStatus(long id) {
+            var product = db.Products.Find(id);
+            product.Status = !product.Status;
+            db.SaveChanges();
+            return product.Status;
+        }
 
         public bool CheckProductName(string Name)
         {

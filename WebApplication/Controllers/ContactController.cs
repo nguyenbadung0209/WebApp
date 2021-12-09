@@ -1,5 +1,6 @@
 ﻿using Model.Dao;
 using Model.EF;
+using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +17,17 @@ namespace OnlineShop.Controllers
             var model = new ContactDao().GetActiveContact();
             return View(model);
         }
+
         [HttpPost]
-        public JsonResult Send(string name, string mobile, string address, string email, string content) {
+        public JsonResult Send(SendContact send) {
             
             var feedback = new Feedback();
-            feedback.Name = name;
-            feedback.Email = email;
+            feedback.Name = send.Name;
+            feedback.Email = send.Email;
             feedback.CreatedDate = DateTime.Now;
-            feedback.Phone = mobile;
-            feedback.Content = content;
-            feedback.Address = address;
+            feedback.Phone = send.Mobile;
+            feedback.Content = send.Content;
+            feedback.Address = send.Address;
 
             var id = new ContactDao().InsertFeedBack(feedback);
             if (id > 0)

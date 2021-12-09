@@ -133,7 +133,7 @@ namespace OnlineShop.Controllers
                     orderDetail.Quantity = item.Quantity;
                     detailDao.Insert(orderDetail);
 
-                    total += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
+                    total += (item.Product.Price * item.Quantity);
                 }
                 string content = System.IO.File.ReadAllText(Server.MapPath("/assets/client/template/neworder.html"));
 

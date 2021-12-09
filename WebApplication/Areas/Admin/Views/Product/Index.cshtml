@@ -5,6 +5,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
+@{   
+    /*Định dạng theo tiền việt nam*/
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
 @section header{
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -47,13 +52,14 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
+
                                 <tr id="row_@item.ID">
                                     <td><input type="checkbox" name="productDelete" class="productDelete" value="@item.ID" /></td>
                                     <td>@item.Name</td>
                                     <td>@item.CateName</td>
                                     <td>@item.CateMetaTitle</td>
                                     <td>@item.Code</td>
-                                    <td>@item.Price</td>
+                                    <td>@String.Format(info,"{0:c1}",item.Price)</td>
                                     <td>@item.Quantity</td>
                                     <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
                                     <td>

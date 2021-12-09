@@ -83,12 +83,23 @@ namespace OnlineShop.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult DeleteSelectedCheckbox(string[] data)
         {
-            foreach (var id in data)
+            if (data != null)
             {
-                new ProductDao().Delete(Convert.ToInt32(id));
+                foreach (var id in data)
+                {
+                    new ProductDao().Delete(Convert.ToInt32(id));
+                }
             }
+            else { return Json(new { status = false }); }
 
             return Json(new { status = true });
+        }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(long id)
+        {
+            var result = new ProductDao().ChangeStatus(id);
+            return Json(new { status = result });
         }
     }
 }

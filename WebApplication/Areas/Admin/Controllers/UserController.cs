@@ -40,7 +40,7 @@ namespace OnlineShop.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-                
+
                 if (dao.CheckUserName(user.UserName))
                 {
                     ModelState.AddModelError("", "The username is already taken");
@@ -105,10 +105,14 @@ namespace OnlineShop.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult DeleteSelectedCheckbox(string[] data)
         {
-            foreach (var id in data)
+            if (data != null)
             {
-                new UserDao().Delete(Convert.ToInt32(id));
+                foreach (var id in data)
+                {
+                    new UserDao().Delete(Convert.ToInt32(id));
+                }
             }
+            else { return Json(new { status = false }); }
 
             return Json(new { status = true });
         }

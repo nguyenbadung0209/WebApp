@@ -29,7 +29,7 @@ namespace Model.EF
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
         [Required(ErrorMessage = "Price is requied")]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
         public decimal? PromotionPrice { get; set; }
 
@@ -60,7 +60,7 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
 
         public DateTime? TopHot { get; set; }
 

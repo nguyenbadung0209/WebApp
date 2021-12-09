@@ -30,8 +30,7 @@ namespace OnlineShop.Controllers
             return PartialView(model);
         }
 
-        [ChildActionOnly]
-        [OutputCache(Duration = 3600 * 24)]
+        [ChildActionOnly]      
         public ActionResult TopMenu()
         {
             var model = new MenuDao().ListByGroupId(2);
