@@ -97,7 +97,7 @@ namespace OnlineShop.Controllers
         public ActionResult Logout()
         {
             Session.Remove(CommonConstanst.USER_SESSION);
-            return Redirect("/");
+            return RedirectToAction("Index","Home");
         }
 
         [HttpPost]

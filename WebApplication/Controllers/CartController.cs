@@ -58,8 +58,9 @@ namespace OnlineShop.Controllers
             return Json(new { status = true });
         }
 
-        public ActionResult AddItem(long productId, int quantity)
+        public ActionResult AddItem(int customerId,long productId, int quantity)
         {
+            var customer = new UserDao().ViewDatail(customerId);
             var product = new ProductDao().ViewDetail(productId);
             var cart = Session[CommonConstanst.CartSession];
             if (cart != null)

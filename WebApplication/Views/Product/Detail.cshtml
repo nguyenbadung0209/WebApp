@@ -7,6 +7,10 @@
     var relatedProducts = (List<Model.EF.Product>)ViewBag.RelatedProducts;
 }
 
+@{
+    var session = (OnlineShop.Common.UserLogin)Session[OnlineShop.Common.CommonConstanst.USER_SESSION];
+}
+
 <!-- Open Content -->
 <section class="bg-light">
     <div class="container pb-5">
@@ -153,17 +157,15 @@
                             </div>
                             <div class="row pb-3">
                                 <div class="col d-grid">
-                                    
-                                    <input type=button onClick="parent.location='/addcart?productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Buy"/>
-                                </div>
-                                <div class="col d-grid">
-
-                                    <input type=button onClick="parent.location='/addcart?productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Add to Cart"/>
+                                    @if (session != null)
+                                    {<input type=button onClick="parent.location='/addcart?customerId=@session.UserId&productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Add to Cart" />}
+                                    else
+                                    {<p class="text-danger">Please login to buy!</p>}
                                 </div>
                             </div>
                         </form>
 
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
