@@ -160,7 +160,7 @@
                                     @if (session != null)
                                     {<input type=button onClick="parent.location='/addcart?customerId=@session.UserId&productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Add to Cart" />}
                                     else
-                                    {<p class="text-danger">Please login to buy!</p>}
+                                    {<input type=button onClick="parent.location='/addcart?customerId=0&productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Add to Cart" />}
                                 </div>
                             </div>
                         </form>

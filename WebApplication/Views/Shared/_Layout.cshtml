@@ -9,8 +9,7 @@
     <link href="/assets/client/css/bootstrap-social.css" rel="stylesheet" />
     <link rel="apple-touch-icon" href="/assets/client/images/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="assets/client/images/favicon.ico">
-    <script src="/assets/client/js/jquery-1.11.0.min.js"></script>
-    <script src="/assets/client/js/bootstrap.min.js"></script>
+    <script src="/assets/client/js/jquery-1.11.0.min.js"></script> 
     <link rel="stylesheet" href="/assets/client/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/client/css/templatemo.css">
     <link rel="stylesheet" href="/assets/client/css/custom.css">
@@ -50,7 +49,7 @@
             <!---->
             @{Html.RenderAction("MainMenu", "Home");}
 
-            <div class="navbar align-self-center d-flex">
+            @*<div class="navbar align-self-center d-flex">
                 <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                     <div class="input-group">
                         <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
@@ -60,17 +59,17 @@
                     </div>
                 </div>
                 <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
+                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                </a>
             </div>
 
-            |
+            |*@
 
             @{ Html.RenderAction("HeaderCart", "Home");}
 
         </div>
 
-        
+
     </nav>
     <!-- Close Header -->
     <!-- Modal -->
@@ -91,8 +90,29 @@
     </div>
 
 
+
     @RenderBody()
 
+    <!--create dialog TempData["SuccessMessage"] = "You need to log in to make a purchase !";-->
+    <div id="myModalSuccess" class="modal fade text-width:30%;" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>
+                        Information
+                    </h2>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div id="MyModalSuccessAlertBody" class="modal-body alert alert-success ">
+                    This is a modal body
+                </div>
+                <div class="modal-footer">
+                    &nbsp;
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">
@@ -103,7 +123,7 @@
     <!-- Start Script -->
     <script src="/assets/client/js/jquery-1.11.0.min.js"></script>
     <script src="/assets/client/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="/assets/client/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/client/js/templatemo.js"></script>
     <script src="/assets/client/js/custom.js"></script>
     <!-- End Script -->

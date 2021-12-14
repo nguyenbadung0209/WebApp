@@ -16,143 +16,190 @@ namespace OnlineShop.Controllers
     public class CartController : Controller
     {
         // GET: Cart
-
-
         public ActionResult Index()
         {
-            var cart = Session[CommonConstanst.CartSession];
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+            var cart = new CartDao().ListByCustomerId(user.UserId);
             var list = new List<CartItem>();
+
             if (cart != null)
             {
-                list = (List<CartItem>)cart;
+                foreach (var item in cart)
+                {
+                    var product = new ProductDao().ViewDetail(item.ProductID);
+                    var items = new CartItem();
+                    items.Product = product;
+                    items.Quantity = item.Quantity;
+                    list.Add(items);
+                }
             }
             return View(list);
         }
 
         public JsonResult DeleteAll()
         {
-            Session[CommonConstanst.CartSession] = null;
-            return Json(new { status = true });
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+            var cart = new CartDao().ListByCustomerId(user.UserId);
+            var delete = new CartDao().DeleteAll(cart);
+            return Json(new { status = delete });
         }
 
         public JsonResult Delete(long id)
         {
-            var sessionCart = (List<CartItem>)Session[CommonConstanst.CartSession];
-            sessionCart.RemoveAll(x => x.Product.ID == id);
-            Session[CommonConstanst.CartSession] = sessionCart;
-            return Json(new { status = true });
-        }
-        public JsonResult Update(string cartModel)
-        {
-            var jsonCart = new JavaScriptSerializer().Deserialize<List<CartItem>>(cartModel);
-            var sessionCart = (List<CartItem>)Session[CommonConstanst.CartSession];
-            foreach (var item in sessionCart)
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+            var cart = new CartDao().ListByCustomerId(user.UserId);
+
+            foreach (var item in cart)
             {
-                var jsonItem = jsonCart.SingleOrDefault(x => x.Product.ID == item.Product.ID);
-                if (jsonItem != null)
+                if (item.ProductID == id)
                 {
-                    item.Quantity = jsonItem.Quantity;
+                    var delete = new CartDao().Delete(item);
+                    return Json(new { status = delete });
                 }
             }
-            Session[CommonConstanst.CartSession] = sessionCart;
             return Json(new { status = true });
         }
 
-        public ActionResult AddItem(int customerId,long productId, int quantity)
+        public JsonResult Update(string cartModel)
         {
-            var customer = new UserDao().ViewDatail(customerId);
-            var product = new ProductDao().ViewDetail(productId);
-            var cart = Session[CommonConstanst.CartSession];
-            if (cart != null)
+            var jsonCart = new JavaScriptSerializer().Deserialize<List<CartItem>>(cartModel);
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+            var cart = new CartDao().ListByCustomerId(user.UserId);
+
+            foreach (var item in cart)
             {
-                var list = (List<CartItem>)cart;
-                if (list.Exists(x => x.Product.ID == productId))
+                var jsonItem = jsonCart.SingleOrDefault(x => x.Product.ID == item.ProductID);
+                item.Quantity = jsonItem.Quantity;
+                var result = new CartDao().UpdateQuantity(item);
+            }
+            return Json(new { status = true });
+        }
+
+        public ActionResult AddItem(long customerId, long productId, int quantity)
+        {
+            var product = new ProductDao().ViewDetail(productId);
+            var cart = new CartDao().ListByCustomerId(customerId);
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+
+            if (user == null)
+            {
+                TempData["SuccessMessage"] = "You need to log in to make a purchase !";
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                if (cart != null)
                 {
-                    foreach (var item in list)
+                    if (cart.Exists(x => x.ProductID == productId))
                     {
-                        if (item.Product.ID == productId)
+                        foreach (var item in cart)
                         {
-                            item.Quantity += quantity;
+                            if (item.ProductID == productId)
+                            {
+                                item.Quantity += quantity;
+                                var result = new CartDao().UpdateQuantity(item);
+                                if (result) { return RedirectToAction("Index"); }
+                            }
+
                         }
+                    }
+                    else
+                    {
+                        var item = new Cart();
+                        item.CustomerID = customerId;
+                        item.ProductID = product.ID;
+                        item.Quantity = quantity;
+                        var result = new CartDao().Insert(item);
+                        if (result > 0) { return RedirectToAction("Index"); }
                     }
                 }
                 else
                 {
-                    var item = new CartItem();
-                    item.Product = product;
+                    var item = new Cart();
+                    item.CustomerID = customerId;
+                    item.ProductID = product.ID;
                     item.Quantity = quantity;
-                    list.Add(item);
-
+                    long result = new CartDao().Insert(item);
+                    if (result > 0)
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
-            }
-            else
-            {
-                var item = new CartItem();
-                item.Product = product;
-                item.Quantity = quantity;
-                var list = new List<CartItem>();
-                list.Add(item);
-                Session[CommonConstanst.CartSession] = list;
             }
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public ActionResult Payment()
         {
-            var cart = Session[CommonConstanst.CartSession];
+            return View();
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult CartItem()
+        {
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+            var cart = new CartDao().ListByCustomerId(user.UserId);
             var list = new List<CartItem>();
+
             if (cart != null)
             {
-                list = (List<CartItem>)cart;
+                foreach (var item in cart)
+                {
+                    var product = new ProductDao().ViewDetail(item.ProductID);
+                    var items = new CartItem();
+                    items.Product = product;
+                    items.Quantity = item.Quantity;
+                    list.Add(items);
+                }
             }
-            return View(list);
-
+            return PartialView(list);
         }
 
         [HttpPost]
-        public ActionResult Payment(string shipName, string mobile, string address, string email)
+        public ActionResult Payment(PaymentModel payment)
         {
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
             var order = new Order();
+
             order.CreatedDate = DateTime.Now;
-            order.ShipAddress = address;
-            order.ShipMobile = mobile;
-            order.ShipName = shipName;
-            order.ShipEmail = email;
+            order.CustomerID = user.UserId;
+            order.ShipName = payment.ShipName;
+            order.ShipMobile = payment.ShipMobile;
+            order.ShipAddress = payment.ShipAddress;
+            order.ShipEmail = payment.ShipEmail;
 
-            try
+            var id = new OrderDao().Insert(order);
+            var cart = new CartDao().ListByCustomerId(user.UserId);
+            var detailDao = new OrderDetailDao();
+
+            foreach (var item in cart)
             {
-                var id = new OrderDao().Insert(order);
-                var cart = (List<CartItem>)Session[CommonConstanst.CartSession];
-                var detailDao = new OrderDetailDao();
-                decimal total = 0;
-                foreach (var item in cart)
-                {
-                    var orderDetail = new OrderDetail();
-                    orderDetail.ProductID = item.Product.ID;
-                    orderDetail.OrderID = id;
-                    orderDetail.Price = item.Product.Price;
-                    orderDetail.Quantity = item.Quantity;
-                    detailDao.Insert(orderDetail);
+                var product = new ProductDao().ViewDetail(item.ProductID);
+                var orderDetail = new OrderDetail();
 
-                    total += (item.Product.Price * item.Quantity);
-                }
-                string content = System.IO.File.ReadAllText(Server.MapPath("/assets/client/template/neworder.html"));
-
-                content = content.Replace("{{CustomerName}}", shipName);
-                content = content.Replace("{{Phone}}", mobile);
-                content = content.Replace("{{Email}}", email);
-                content = content.Replace("{{Address}}", address);
-                content = content.Replace("{{Total}}", total.ToString("N0"));
-                var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
-
-                new MailHelper().SendMail(email, "New Order from OnlineShop", content);
-                new MailHelper().SendMail(toEmail, "New Order from OnlineShop", content);
-
+                orderDetail.ProductID = item.ProductID;
+                orderDetail.OrderID = id;
+                orderDetail.Quantity = item.Quantity;
+                orderDetail.Price = product.Price;
+                detailDao.Insert(orderDetail);
             }
-            catch (Exception)
-            {
-                return Redirect("/Error");
-            }
+
+            var delete = new CartDao().DeleteAll(cart);
+            if (delete == true) { return RedirectToAction("Success"); }
+
+            //string content = System.IO.File.ReadAllText(Server.MapPath("/assets/client/template/neworder.html"));
+
+            //content = content.Replace("{{CustomerName}}", shipName);
+            //content = content.Replace("{{Phone}}", mobile);
+            //content = content.Replace("{{Email}}", email);
+            //content = content.Replace("{{Address}}", address);
+            //content = content.Replace("{{Total}}", total.ToString("N0"));
+            //var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
+
+            //new MailHelper().SendMail(email, "New Order from OnlineShop", content);
+            //new MailHelper().SendMail(toEmail, "New Order from OnlineShop", content);
+
             return RedirectToAction("Success");
 
         }

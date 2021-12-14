@@ -41,13 +41,25 @@ namespace OnlineShop.Controllers
         [ChildActionOnly]
         public PartialViewResult HeaderCart()
         {
-            var cart = Session[CommonConstanst.CartSession];
-            var list = new List<CartItem>();
-            if (cart != null)
-            {
-                list = (List<CartItem>)cart;
+            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+            if (user != null) {
+                var cart = new CartDao().ListByCustomerId(user.UserId);
+                var list = new List<CartItem>();
+
+                if (cart != null)
+                {
+                    foreach (var item in cart)
+                    {
+                        var product = new ProductDao().ViewDetail(item.ProductID);
+                        var items = new CartItem();
+                        items.Product = product;
+                        items.Quantity = item.Quantity;
+                        list.Add(items);
+                    }
+                }
+                return PartialView(list);
             }
-            return PartialView(list);
+            return PartialView();
         }
 
         [ChildActionOnly]

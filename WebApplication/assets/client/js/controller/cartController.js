@@ -58,7 +58,7 @@
                 type: 'POST',
                 success: function (res) {
                     if (res.status == true) {
-                        window.location.href = "/cart";
+                        window.location.href = "/cart"; 
                     }
                 }
             })

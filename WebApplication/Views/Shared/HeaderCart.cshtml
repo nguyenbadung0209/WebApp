@@ -1,6 +1,6 @@
 ﻿@model List<OnlineShop.Models.CartItem>
-<div class="cart">
 
-    <span>Cart : @Model.Count product</span>
-    
+<div class="cart">
+    @if (Model != null)
+    {<a href="/Cart/Index"><span>My Cart : @Model.Count product</span></a>}
 </div>
