@@ -159,48 +159,50 @@ namespace OnlineShop.Controllers
         [HttpPost]
         public ActionResult Payment(PaymentModel payment)
         {
-            var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
-            var order = new Order();
-
-            order.CreatedDate = DateTime.Now;
-            order.CustomerID = user.UserId;
-            order.ShipName = payment.ShipName;
-            order.ShipMobile = payment.ShipMobile;
-            order.ShipAddress = payment.ShipAddress;
-            order.ShipEmail = payment.ShipEmail;
-
-            var id = new OrderDao().Insert(order);
-            var cart = new CartDao().ListByCustomerId(user.UserId);
-            var detailDao = new OrderDetailDao();
-
-            foreach (var item in cart)
+            if (ModelState.IsValid)
             {
-                var product = new ProductDao().ViewDetail(item.ProductID);
-                var orderDetail = new OrderDetail();
+                var user = (UserLogin)Session[CommonConstanst.USER_SESSION];
+                var order = new Order();
 
-                orderDetail.ProductID = item.ProductID;
-                orderDetail.OrderID = id;
-                orderDetail.Quantity = item.Quantity;
-                orderDetail.Price = product.Price;
-                detailDao.Insert(orderDetail);
+                order.CreatedDate = DateTime.Now;
+                order.CustomerID = user.UserId;
+                order.ShipName = payment.ShipName;
+                order.ShipMobile = payment.ShipMobile;
+                order.ShipAddress = payment.ShipAddress;
+                order.ShipEmail = payment.ShipEmail;
+
+                var id = new OrderDao().Insert(order);
+                var cart = new CartDao().ListByCustomerId(user.UserId);
+                var detailDao = new OrderDetailDao();
+
+                foreach (var item in cart)
+                {
+                    var product = new ProductDao().ViewDetail(item.ProductID);
+                    var orderDetail = new OrderDetail();
+
+                    orderDetail.ProductID = item.ProductID;
+                    orderDetail.OrderID = id;
+                    orderDetail.Quantity = item.Quantity;
+                    orderDetail.Price = product.Price;
+                    detailDao.Insert(orderDetail);
+                }
+
+                var delete = new CartDao().DeleteAll(cart);
+                if (delete == true) { return RedirectToAction("Success"); }
+
+                //string content = System.IO.File.ReadAllText(Server.MapPath("/assets/client/template/neworder.html"));
+
+                //content = content.Replace("{{CustomerName}}", shipName);
+                //content = content.Replace("{{Phone}}", mobile);
+                //content = content.Replace("{{Email}}", email);
+                //content = content.Replace("{{Address}}", address);
+                //content = content.Replace("{{Total}}", total.ToString("N0"));
+                //var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
+
+                //new MailHelper().SendMail(email, "New Order from OnlineShop", content);
+                //new MailHelper().SendMail(toEmail, "New Order from OnlineShop", content);
             }
-
-            var delete = new CartDao().DeleteAll(cart);
-            if (delete == true) { return RedirectToAction("Success"); }
-
-            //string content = System.IO.File.ReadAllText(Server.MapPath("/assets/client/template/neworder.html"));
-
-            //content = content.Replace("{{CustomerName}}", shipName);
-            //content = content.Replace("{{Phone}}", mobile);
-            //content = content.Replace("{{Email}}", email);
-            //content = content.Replace("{{Address}}", address);
-            //content = content.Replace("{{Total}}", total.ToString("N0"));
-            //var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
-
-            //new MailHelper().SendMail(email, "New Order from OnlineShop", content);
-            //new MailHelper().SendMail(toEmail, "New Order from OnlineShop", content);
-
-            return RedirectToAction("Success");
+            return View();
 
         }
 

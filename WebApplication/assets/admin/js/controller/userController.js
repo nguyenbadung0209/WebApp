@@ -6,21 +6,20 @@
 
         $('#btnDelete').off('click').on('click', function (e) {
             e.preventDefault();
-            var boxData = [];
+            var boxData = new Array();
             $("input[name='userDelete']:checked").each(function () {
                 boxData.push($(this).val());
+                $("#row_" + $(this).val()).remove();
             });
            
             $.ajax({
-
-                url: "DeleteSelectedCheckbox",
+                url: "/Admin/User/DeleteSelectedCheckbox",
                 data: { data: boxData },
                 dataType: 'json',
                 type: 'POST',
                 success: function (res) {
                     if (res.status == true) {
                         alert("Delete Success...");
-                        window.location.href = "Index";
                     } else {
                         alert("Delete Error...");
                     }

@@ -16,9 +16,9 @@ namespace Model.Dao
         }
 
 
-        public List<Category> ListAll()
+        public List<ProductCategory> ListAll()
         {
-            return db.Categories.Where(x => x.Status == true).ToList();
+            return db.ProductCategories.Where(x => x.Status == true).ToList();
         }
 
         public long Insert(ProductCategory entity)

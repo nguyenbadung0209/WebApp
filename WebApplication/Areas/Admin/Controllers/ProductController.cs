@@ -21,11 +21,12 @@ namespace OnlineShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            SetViewBag();
             return View();
         }
         [HttpPost]
         public ActionResult Create(Product product)
-        {
+        {           
             if (ModelState.IsValid)
             {
                 var dao = new ProductDao();
@@ -47,13 +48,21 @@ namespace OnlineShop.Areas.Admin.Controllers
                     }
                 }
             }
+            SetViewBag();
             return View();
+        }
+
+        public void SetViewBag(long? selectedId = null)
+        {
+            var dao = new CategoryDao();
+            ViewBag.CategoryID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
 
         [HttpGet]
         public ActionResult Edit(long id)
         {
             var product = new ProductDao().ViewDetail(id);
+            SetViewBag(product.CategoryID);
             return View(product);
         }
 
@@ -65,7 +74,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                 var dao = new ProductDao();
 
                 var result = dao.Update(product);
-
+                SetViewBag(product.CategoryID);
                 if (result)
                 {
                     //SetAlert("Saved Successfully", "success");

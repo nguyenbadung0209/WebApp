@@ -6,9 +6,10 @@
 
         $('#btnDelete').off('click').on('click', function (e) {
             e.preventDefault();
-            var boxData = [];
+            var boxData = new Array();
             $("input[name='productDelete']:checked").each(function () {
                 boxData.push($(this).val());
+                $("#row_" + $(this).val()).remove();
             });
 
             $.ajax({
@@ -19,8 +20,7 @@
                 type: 'POST',
                 success: function (res) {
                     if (res.status == true) {
-                        alert("Delete Success...");
-                        window.location.href = "/Admin/Product/Index";
+                        alert("Delete Success...");                        
                     } else {
                         alert("Delete Error...");
                     }

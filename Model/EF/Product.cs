@@ -11,12 +11,14 @@ namespace Model.EF
     {
         public long ID { get; set; }
         [Required(ErrorMessage ="Name is requied")]
+        [Display(Name = "Product Name")]
         [StringLength(250)]
         public string Name { get; set; }
         [Required(ErrorMessage = "Code is requied")]
         [StringLength(10)]
         public string Code { get; set; }
-        [Required(ErrorMessage = "MetaTitle is requied")]
+        [Required(ErrorMessage = "Title is requied")]
+        [Display(Name = "Title")]
         [StringLength(250)]
         public string MetaTitle { get; set; }
         [Required(ErrorMessage = "Description is requied")]
@@ -31,13 +33,16 @@ namespace Model.EF
         [Required(ErrorMessage = "Price is requied")]
         public decimal Price { get; set; }
 
+        [Display(Name = "Promotion Price")]
         public decimal? PromotionPrice { get; set; }
-
+        [Display(Name = "VAT")]
         public bool? IncludedVAT { get; set; }
         [Required(ErrorMessage = "Quantity is requied")]
         public int Quantity { get; set; }
 
-        public long? CategoryID { get; set; }
+        [Required(ErrorMessage = "Product Category is requied")]
+        [Display(Name = "Product Category")]
+        public long CategoryID { get; set; }
 
         [Column(TypeName = "ntext")]
         public string Detail { get; set; }
