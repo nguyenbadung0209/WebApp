@@ -66,13 +66,13 @@ namespace Model.Dao
                 return true;
             }
             catch (Exception) { return false; }
-
         }
+
         public IEnumerable<ProductViewModel> ListAllPaging(string searchString, int page, int pageSize)
         {
             IQueryable<ProductViewModel> model = from product in db.Products
                                                  join productCategory in db.ProductCategories
-                                                 on product.CategoryID equals productCategory.ID                                               
+                                                 on product.CategoryID equals productCategory.ID
                                                  select new ProductViewModel()
                                                  {
                                                      CateMetaTitle = productCategory.MetaTitle,
@@ -80,8 +80,8 @@ namespace Model.Dao
                                                      Status = product.Status,
                                                      ID = product.ID,
                                                      Name = product.Name,
-                                                     Code = product.Code,                                                    
-                                                     Price = product.Price,                                                    
+                                                     Code = product.Code,
+                                                     Price = product.Price,
                                                      Quantity = product.Quantity
                                                  };
             if (!string.IsNullOrEmpty(searchString))
@@ -89,13 +89,19 @@ namespace Model.Dao
                 model = model.Where(x => x.Name.Contains(searchString) || x.CateName.Contains(searchString));
             }
 
-            return model.OrderByDescending(x=>x.ID).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
+        }
+
+        public List<string> ListName(string keyword)
+        {
+            return db.Products.Where(x => x.Name.Contains(keyword)).Select(x => x.Name).ToList();
         }
 
         public List<Product> ListNewProduct(int top)
         {
             return db.Products.OrderByDescending(x => x.CreatedDate).Take(top).ToList();
         }
+
         public List<Product> ListByCategoryId(long categoryID, ref int totalRecord, int page = 1, int pageSize = 2)
         {
             totalRecord = db.Products.Where(x => x.CategoryID == categoryID).Count();
@@ -119,6 +125,15 @@ namespace Model.Dao
             return model.ToList();
         }
 
+        public List<Product> Search(string keyword, ref int totalRecord, int page = 1, int pageSize = 2)
+        {
+            totalRecord = db.Products.Where(x => x.Name.Contains(keyword)).Count();
+            var model = db.Products.Where(x => x.Name.Contains(keyword));
+            
+            model.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+            return model.ToList();
+        }
+
         public List<Product> ListFeatureProduct(int top)
         {
             return db.Products.Where(x => x.TopHot != null && x.TopHot > DateTime.Now).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
@@ -135,7 +150,8 @@ namespace Model.Dao
             return db.Products.Find(id);
         }
 
-        public bool ChangeStatus(long id) {
+        public bool ChangeStatus(long id)
+        {
             var product = db.Products.Find(id);
             product.Status = !product.Status;
             db.SaveChanges();

@@ -41,14 +41,14 @@ namespace OnlineShop.Areas.Admin.Controllers
                 else
                 {
                     long id = dao.Insert(product);
+                    SetViewBag();
                     if (id > 0)
                     {
                         TempData["SuccessMessage"] = "Product " + product.Name + " Created Successfully!";
                         return RedirectToAction("Index", "Product");
                     }
                 }
-            }
-            SetViewBag();
+            }           
             return View();
         }
 

@@ -9,15 +9,15 @@
 @section header{
     <h2>ADD PRODUCT CATEGORY</h2>
     <hr />
-    @using (Html.BeginForm("Create","Category",FormMethod.Post))
+    @using (Html.BeginForm("Create", "Category", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-                       
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.MetaTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.MetaTitle, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.MetaTitle, "", new { @class = "text-danger" })
                 </div>
@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.MetaDescriptions, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.MetaDescriptions, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.MetaDescriptions, "", new { @class = "text-danger" })
                 </div>
@@ -41,7 +41,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-4">
                     <div class="checkbox">
                         @Html.EditorFor(model => model.Status)
                         @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })

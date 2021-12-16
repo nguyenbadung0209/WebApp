@@ -36,7 +36,7 @@ namespace Model.EF
         [Display(Name = "Promotion Price")]
         public decimal? PromotionPrice { get; set; }
         [Display(Name = "VAT")]
-        public bool? IncludedVAT { get; set; }
+        public bool IncludedVAT { get; set; }
         [Required(ErrorMessage = "Quantity is requied")]
         public int Quantity { get; set; }
 

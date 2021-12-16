@@ -5,11 +5,17 @@
     <title>Zay Shop eCommerce HTML CSS Template</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="/assets/client/css/bootstrap.css" rel="stylesheet" />
     <link href="/assets/client/css/bootstrap-social.css" rel="stylesheet" />
+    <link href="/assets/client/css/jquery-ui.css" rel="stylesheet" />
+
     <link rel="apple-touch-icon" href="/assets/client/images/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="assets/client/images/favicon.ico">
-    <script src="/assets/client/js/jquery-1.11.0.min.js"></script> 
+
+    <script src="/assets/client/js/jquery-1.11.0.min.js"></script>
+    <script src="/assets/client/js/jquery-ui.js"></script> 
+
     <link rel="stylesheet" href="/assets/client/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/client/css/templatemo.css">
     <link rel="stylesheet" href="/assets/client/css/custom.css">
@@ -18,11 +24,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="/assets/client/css/fontawesome.min.css">
     <!--
-
-    TemplateMo 559 Zay Shop
-
-    https://templatemo.com/tm-559-zay-shop
-
     -->
 </head>
 
@@ -47,28 +48,28 @@
             </button>
 
             <!---->
-            @{Html.RenderAction("MainMenu", "Home");}
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
 
-            @*<div class="navbar align-self-center d-flex">
-                <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                        <div class="input-group-text">
-                            <i class="fa fa-fw fa-search"></i>
+                @{Html.RenderAction("MainMenu", "Home");}
+
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
                         </div>
                     </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    
+                    @{ Html.RenderAction("HeaderCart", "Home");}
+
                 </div>
-                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                </a>
             </div>
-
-            |*@
-
-            @{ Html.RenderAction("HeaderCart", "Home");}
-
         </div>
-
 
     </nav>
     <!-- Close Header -->
@@ -80,7 +81,7 @@
             </div>
             <form action="/search" method="get" class="modal-content modal-body border-0 p-0">
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <input type="text" class="form-control" id="txtKeyword" name="keyword" placeholder="Search ...">
                     <button type="submit" class="input-group-text bg-success text-light">
                         <i class="fa fa-fw fa-search text-white"></i>
                     </button>
@@ -124,10 +125,12 @@
     <script src="/assets/client/js/jquery-1.11.0.min.js"></script>
     <script src="/assets/client/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="/assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/client/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/client/js/templatemo.js"></script>
     <script src="/assets/client/js/custom.js"></script>
     <!-- End Script -->
     <script src="/assets/client/js/slick.min.js"></script>
+    @*<script src="/assets/client/js/controller/baseController.js"></script>*@ 
     <script>
         $('#carousel-related-product').slick({
             infinite: true,
