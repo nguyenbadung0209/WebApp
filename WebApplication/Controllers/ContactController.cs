@@ -14,38 +14,50 @@ namespace OnlineShop.Controllers
         // GET: Contact
         public ActionResult Index()
         {
-            var model = new ContactDao().GetActiveContact();
-            return View(model);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Contact()
+        {
+            return View();
         }
 
         [HttpPost]
-        public JsonResult Send(SendContact send) {
-            
-            var feedback = new Feedback();
-            feedback.Name = send.Name;
-            feedback.Email = send.Email;
-            feedback.CreatedDate = DateTime.Now;
-            feedback.Phone = send.Mobile;
-            feedback.Content = send.Content;
-            feedback.Address = send.Address;
-
-            var id = new ContactDao().InsertFeedBack(feedback);
-            if (id > 0)
+        public ActionResult Contact(SendContact send)
+        {
+            if (ModelState.IsValid)
             {
-                return Json(new
+                var feedback = new Feedback();
+                feedback.Name = send.Name;
+                feedback.Phone = send.Mobile;
+                feedback.Email = send.Email;
+                feedback.Address = send.Address;
+                feedback.Content = send.Content;
+                feedback.CreatedDate = DateTime.Now;
+
+                var id = new ContactDao().InsertFeedBack(feedback);
+                if (id > 0)
                 {
-                    status = true
-                });
-                //send mail
+                    TempData["SuccessMessage"] = "Feedback Success!";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["SuccessMessage"] = "Feedback Fail!";
+                    return RedirectToAction("Index", "Home");
+                }
             }
-
-            else
-                return Json(new
-                {
-                    status = false
-                });
-
+            return View();
         }
+
+        [ChildActionOnly]
+        public PartialViewResult ContactUs()
+        {
+            var list = new ContactDao().GetActiveContact();
+            return PartialView(list);
+        }
+
     }
-    
+
 }

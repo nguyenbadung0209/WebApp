@@ -215,5 +215,6 @@ namespace Model.EF
         }
 
         public System.Data.Entity.DbSet<Model.ViewModel.ProductViewModel> ProductViewModels { get; set; }
+        
     }
 }
