@@ -8,10 +8,9 @@
             e.preventDefault();
             var boxData = new Array();
             $("input[name='userDelete']:checked").each(function () {
-                boxData.push($(this).val());
-                $("#row_" + $(this).val()).remove();
+                boxData.push($(this).val());                            
             });
-           
+                   
             $.ajax({
                 url: "/Admin/User/DeleteSelectedCheckbox",
                 data: { data: boxData },
@@ -19,6 +18,9 @@
                 type: 'POST',
                 success: function (res) {
                     if (res.status == true) {
+                        $("input[name='userDelete']:checked").each(function () {
+                            $("#row_" + $(this).val()).remove();
+                        });
                         alert("Delete Success...");
                     } else {
                         alert("Delete Error...");

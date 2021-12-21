@@ -9,7 +9,6 @@
             var boxData = new Array();
             $("input[name='productDelete']:checked").each(function () {
                 boxData.push($(this).val());
-                $("#row_" + $(this).val()).remove();
             });
 
             $.ajax({
@@ -20,6 +19,9 @@
                 type: 'POST',
                 success: function (res) {
                     if (res.status == true) {
+                        $("input[name='productDelete']:checked").each(function () {                           
+                            $("#row_" + $(this).val()).remove();
+                        });
                         alert("Delete Success...");                        
                     } else {
                         alert("Delete Error...");

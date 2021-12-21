@@ -27,7 +27,7 @@ namespace OnlineShop.Models
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]
-        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter the correct address")]
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Please enter the correct address")]
         public string ShipEmail { get; set; }
     }
 }
