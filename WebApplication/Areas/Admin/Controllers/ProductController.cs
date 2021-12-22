@@ -41,7 +41,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                 else
                 {
                     long id = dao.Insert(product);
-                    SetViewBag();
+                    SetViewBag(product.CategoryID);
                     if (id > 0)
                     {
                         TempData["SuccessMessage"] = "Product " + product.Name + " Created Successfully!";

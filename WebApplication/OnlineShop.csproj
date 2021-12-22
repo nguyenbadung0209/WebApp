@@ -1860,6 +1860,7 @@
     <Content Include="assets\client\css\bootstrap-reboot.rtl.css" />
     <Content Include="assets\client\css\bootstrap-reboot.rtl.min.css" />
     <Content Include="assets\client\css\bootstrap-social.css" />
+    <Content Include="assets\client\css\bootstrap-theme.css" />
     <Content Include="assets\client\css\bootstrap-utilities.css" />
     <Content Include="assets\client\css\bootstrap-utilities.min.css" />
     <Content Include="assets\client\css\bootstrap-utilities.rtl.css" />

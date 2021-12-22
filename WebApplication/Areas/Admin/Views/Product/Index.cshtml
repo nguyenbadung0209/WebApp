@@ -5,14 +5,14 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
-@{   
+@{
     /*Định dạng theo tiền việt nam*/
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
 @section header{
     <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-heading" style="margin-left:-12px;margin-bottom:20px">
             Product List
         </div>
 
@@ -20,11 +20,11 @@
         <div class="panel-body">
             @using (Html.BeginForm("Index", "Product", FormMethod.Get))
             {
-                <div class="row form-group">
+                <div class="row form-group" style="margin-left:-25px">
                     <div class="col-4">
-                        <input type="text" value="@ViewBag.SearchString" class="form-control" name="searchString" />
+                        <input type="text" value="@ViewBag.SearchString" class="form-control" name="searchString" style="width:300px" />
                     </div>
-                    <div class="col-8">
+                    <div class="col-8" style="margin-left:-120px">
                         <button type="submit" class="btn btn-success">Search</button>
                         <a class="btn btn-primary" href="/Admin/Product/Create">Add Product</a>
                         <a class="btn btn-info" href="/Admin/Category/Create">Add Category Product</a>
@@ -32,46 +32,47 @@
 
                     </div>
                 </div>
-            }
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" name="allcheck" id="checkAll" /></th>
-                                <th>Name</th>
-                                <th>NameCategory</th>
-                                <th>MetaTitle</th>
-                                <th>Code</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
 
-                                <tr id="row_@item.ID">
-                                    <td><input type="checkbox" name="productDelete" class="productDelete" value="@item.ID" /></td>
-                                    <td>@item.Name</td>
-                                    <td>@item.CateName</td>
-                                    <td>@item.CateMetaTitle</td>
-                                    <td>@item.Code</td>
-                                    <td>@String.Format(info,"{0:c1}",item.Price)</td>
-                                    <td>@item.Quantity</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
-                                    <td>
-                                        <a href="/Admin/Product/Edit/@item.ID">Edit</a>
-                                    </td>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="allcheck" id="checkAll" /></th>
+                                    <th>Name</th>
+                                    <th>NameCategory</th>
+                                    <th>MetaTitle</th>
+                                    <th>Code</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Status</th>
+                                    <th></th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr id="row_@item.ID">
+                                        <td><input type="checkbox" name="productDelete" class="productDelete" value="@item.ID" /></td>
+                                        <td>@item.Name</td>
+                                        <td>@item.CateName</td>
+                                        <td>@item.CateMetaTitle</td>
+                                        <td>@item.Code</td>
+                                        <td>@String.Format(info, "{0:c1}", item.Price)</td>
+                                        <td>@item.Quantity</td>
+                                        <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
+                                        <td>
+                                            <a href="/Admin/Product/Edit/@item.ID">Edit</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+                    </div>
                 </div>
-            </div>
+            }
             <!-- /.table-responsive -->
         </div>
         <!-- /.panel-body -->

@@ -40,7 +40,7 @@ namespace Model.EF
         [Required(ErrorMessage = "Quantity is requied")]
         public int Quantity { get; set; }
 
-        [Required(ErrorMessage = "Product Category is requied")]
+        
         [Display(Name = "Product Category")]
         public long CategoryID { get; set; }
 
