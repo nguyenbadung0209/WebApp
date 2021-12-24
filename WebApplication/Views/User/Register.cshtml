@@ -14,7 +14,7 @@
 
     <div class="col-xl-6 ">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card o-hidden border-0 shadow-lg my-5" style="width: 600px;margin-left:80px">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
@@ -28,67 +28,87 @@
                             {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
-                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                                    @if (ViewBag.Success != null)
-                                    {
-                                        <div class="alert alert-success">@ViewBag.Success</div>
-                                       
-                                    }
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger", @style = "padding-left: 45px" })
                                 </div>
 
-                                <h5 class="h6 text-gray-900 mb-2">Username</h5>
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @autofocus = "autofocus" })
+                                <div class="row" style="width: 400px; margin-left: 55px">
+                                    <div class="col-md-5">
+                                        <h5 class="h6 text-gray-900 mb-2" style="margin-top:7px;">Username</h5>
+                                    </div>
+                                    <div class="col">
+                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @autofocus = "autofocus", @style = "height: 35px" })
+                                    </div>
                                 </div>
 
-                                <h5></h5>
-                                <h5 class="h6 text-gray-900 mb-2">Password</h5>
-                                <div class="form-group">
-                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", @autofocus = "autofocus" })
+                                <div class="row" style="width: 400px; margin-left: 55px;margin-top:10px">
+                                    <div class="col-md-5">
+                                        <h5 class="h6 text-gray-900 mb-2" style="margin-top:7px;">Password</h5>
+                                    </div>
+                                    <div class="col">
+                                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @autofocus = "autofocus", @style = "height: 35px" })
+                                    </div>
                                 </div>
 
-                                <h5></h5>
-                                <h5 class="h6 text-gray-900 mb-2">ConfirmPassword</h5>
-                                <div class="form-group">
-                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", @autofocus = "autofocus" })
+                                <div class="row" style="width: 400px; margin-left: 55px; margin-top: 10px">
+                                    <div class="col-md-5">
+                                        <h5 class="h6 text-gray-900 mb-2" style="margin-top:7px;">ConfirmPassword</h5>
+                                    </div>
+                                    <div class="col">
+                                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", @autofocus = "autofocus", @style = "height: 35px" })
+                                    </div>
                                 </div>
 
-                                <h5></h5>
-                                <h5 class="h6 text-gray-900 mb-2">Name</h5>
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus" })
+                                <div class="row" style="width: 400px; margin-left: 55px;margin-top:10px">
+                                    <div class="col-md-5">
+                                        <h5 class="h6 text-gray-900 mb-2" style="margin-top:7px;">Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @style = "height: 35px" })
+                                    </div>
                                 </div>
 
-                                <h5></h5>
-                                <h5 class="h6 text-gray-900 mb-2">Address</h5>
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @autofocus = "autofocus" })
+                                <div class="row" style="width: 400px; margin-left: 55px;margin-top:10px">
+                                    <div class="col-md-5">
+                                        <h5 class="h6 text-gray-900 mb-2" style="margin-top:7px;">Address</h5>
+                                    </div>
+                                    <div class="col">
+                                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @autofocus = "autofocus", @style = "height: 35px" })
+                                    </div>
                                 </div>
 
-                                <h5></h5>
-                                <h5 class="h6 text-gray-900 mb-2">Email</h5>
-                                <div class="form-group">
-                                    @Html.TextAreaFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus" })
+
+                                <div class="row" style="width: 400px; margin-left: 55px;margin-top:10px">
+                                    <div class="col-md-5">
+                                        <h5 class="h6 text-gray-900 mb-2" style="margin-top:7px;">Email</h5>
+                                    </div>
+                                    <div class="col">
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus", @style = "height: 35px" })
+                                    </div>
                                 </div>
 
-                                <h5></h5>
-                                <h5 class="h6 text-gray-900 mb-2">Phone</h5>
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @autofocus = "autofocus"})
-                                </div>
 
-                                <h5></h5>
-                                <div class="form-group">
+                                <div class="row" style="width: 400px; margin-left: 55px;margin-top:10px">
+                                    <div class="col-md-5">
+                                        <h5 class="h6 text-gray-900 mb-2" style="margin-top:7px;">Phone</h5>
+                                    </div>
+                                    <div class="col">
+                                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @autofocus = "autofocus", @style = "height: 35px" })
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group" style="margin-left: 135px; margin-top: 20px">
                                     <div class="col-md-offset-2 col-md-10">
-                                        @Html.Captcha(registerCapcha)
+                                        <div  style="width:60px">@Html.Captcha(registerCapcha)</div>
                                         @Html.TextBox("CaptchaCode")
                                     </div>
                                 </div>
 
-                                <h5></h5>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Register
-                                </button>
+
+                                <div style="padding-left: 210px; margin-top: 40px ">
+                                    <button type="submit" class="btn btn-success" style="height: 45px; width: 90px;">
+                                        Register
+                                    </button>
+                                </div>
 
 
                             }

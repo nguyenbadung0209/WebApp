@@ -170,8 +170,8 @@ namespace OnlineShop.Controllers
                     var result = dao.Insert(user);
                     if (result > 0)
                     {
-                        //return RedirectToAction("Index", "Home");
-                        ViewBag.Success = "Register Success";
+                        TempData["SuccessMessage"] = "Register Success!";
+                        return RedirectToAction("Index", "Home");                      
                     }
                     else
                     {

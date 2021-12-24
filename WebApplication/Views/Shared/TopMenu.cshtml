@@ -8,14 +8,14 @@
         <a class="navbar-sm-brand text-light text-decoration-none" href="tel:0981789567">0981789567</a>
     </div>
 
-    <div style="padding-right:15px;">
+    <div style="padding-right: 35px;">
 
         @{
             var session = (OnlineShop.Common.UserLogin)Session[OnlineShop.Common.CommonConstanst.USER_SESSION];
         }
         @if (session == null)
         {
-            <ul style="height:20px;padding-right:10px">
+            <ul style="height: 20px; padding-right: 10px ">
 
                 @foreach (var item in Model)
                 {                   
