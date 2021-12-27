@@ -65,7 +65,7 @@
 
                                         <td>
                                             @*<a href="/Admin/User/Edit/@item.ID">Edit</a>*@
-                                            <a href="#" onclick="editUser()">Edit</a>
+                                            <a href="#" onclick="editUser(@item.ID)">Edit</a>
                                             |
                                             @Ajax.ActionLink("Delete", "Delete", new { @id = item.ID }, new AjaxOptions
                                        {
@@ -92,8 +92,8 @@
 
 @section jsFooter{
     <script type="text/javascript">
-        function createNewUser(id) {
-            $.get("/Admin/User/CreateNewUser", { id: id }, function (res) {
+        function createNewUser() {
+            $.get("/Admin/User/CreateNewUser", function (res) {
                 $("#myModelBody").html(res);
                 $("#myModal").modal('show');
             })
@@ -103,14 +103,13 @@
             var modal = $("#myModal");
             var form = $('form[name="userForm"]');
 
-            form.valid();
+            form.validate();
             if (!form.valid()) {
                 return;
             } else {
                 var data = form.serialize();
                 $.post("/Admin/User/CreateUser", data, function (res) {
                     if (res == true) {
-                        modal.modal('hide');
                         window.location.href = "/Admin/User/Index";
                     }
                 })
@@ -122,6 +121,23 @@
                 $("#myModelBody").html(res);
                 $("#myModal").modal('show');
             })
+        }
+
+        function updateUser(id) {
+            
+            var form = $('form[name="userForm"]');
+            var newForm = form.append('<input name="ID" value="' + id + '" /> ');           
+            form.validate();
+            if (!form.valid()) {
+                return;
+            } else {
+                var data = newForm.serialize();
+                $.post("/Admin/User/UpdateUser", data, function (res) {
+                    if (res == true) {
+                        window.location.href = "/Admin/User/Index";
+                    }
+                })
+            }
         }
     </script>
 

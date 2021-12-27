@@ -22,12 +22,13 @@ namespace OnlineShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public ActionResult CreateNewUser()
         {
-            var user = new User();
-            return PartialView("CreateUser", user);
+            return PartialView("CreateUser");
         }
 
+        [HttpPost]
         public ActionResult CreateUser(User user)
         {
             if (ModelState.IsValid)
@@ -51,16 +52,47 @@ namespace OnlineShop.Areas.Admin.Controllers
                     {
                         //SetAlert("Created Successfully", "success");
                         TempData["SuccessMessage"] = "User " + user.Name + " Created Successfully";
-                        return Json(true,JsonRequestBehavior.AllowGet);
+                        return Json(true, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            return Json(false,JsonRequestBehavior.AllowGet);
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EditUser()
+        [HttpGet]
+        public ActionResult EditUser(int id)
         {
-            return PartialView();
+            var user = new UserDao().ViewDatail(id);
+            return PartialView("EditUser", user);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUser(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var dao = new UserDao();
+
+                if (!string.IsNullOrEmpty(user.Password))
+                {
+                    var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                    user.Password = encryptedMd5Pas;
+                }
+
+                var result = dao.Update(user);
+
+                if (result)
+                {
+                    //SetAlert("Saved Successfully", "success");
+                    TempData["SuccessMessage"] = "User " + user.Name + " Saved Successfully";
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Update user fail");
+                }
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpGet]
@@ -101,41 +133,42 @@ namespace OnlineShop.Areas.Admin.Controllers
         //    return View();
         //}
 
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            var user = new UserDao().ViewDatail(id);
-            return View(user);
-        }
+        //[HttpGet]
+        //public ActionResult Edit(int id)
+        //{
+        //    var user = new UserDao().ViewDatail(id);
+        //    return View(user);
+        //}
 
-        [HttpPost]
-        public ActionResult Edit(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                var dao = new UserDao();
 
-                if (!string.IsNullOrEmpty(user.Password))
-                {
-                    var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
-                    user.Password = encryptedMd5Pas;
-                }
+        //[HttpPost]
+        //public ActionResult Edit(User user)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var dao = new UserDao();
 
-                var result = dao.Update(user);
+        //        if (!string.IsNullOrEmpty(user.Password))
+        //        {
+        //            var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+        //            user.Password = encryptedMd5Pas;
+        //        }
 
-                if (result)
-                {
-                    SetAlert("Saved Successfully", "success");
-                    TempData["SuccessMessage"] = "User " + user.Name + " Saved Successfully";
-                    return RedirectToAction("Index", "User");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Update user fail");
-                }
-            }
-            return View();
-        }
+        //        var result = dao.Update(user);
+
+        //        if (result)
+        //        {
+        //            SetAlert("Saved Successfully", "success");
+        //            TempData["SuccessMessage"] = "User " + user.Name + " Saved Successfully";
+        //            return RedirectToAction("Index", "User");
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", "Update user fail");
+        //        }
+        //    }
+        //    return View();
+        //}
 
         [HttpDelete]
         public ActionResult Delete(int id)

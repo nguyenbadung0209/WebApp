@@ -1,1 +1,60 @@
-﻿<h3>hello</h3>
+﻿@model Model.EF.User
+
+<form name="userForm">
+
+    <div class="modal-header">
+        <span>ADD NEW USER</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm("CreateUser", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="form-group" style="width : 600px">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.TextBoxFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px;padding-left:5px" })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group" style="width : 600px">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px;padding-left:5px" })
+            </div>
+
+            <div class="form-group" style="width : 600px">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px;padding-left:5px" })
+            </div>
+
+            <div class="form-group" style="width : 600px">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.TextBoxFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px;padding-left:5px" })
+            </div>
+
+            <div class="form-group" style="width : 600px">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.TextBoxFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px;padding-left:5px" })
+            </div>
+
+
+            <div class="form-group" style="width : 600px">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.TextBoxFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px;padding-left:5px" })
+            </div>
+
+            @*<div class="form-group">
+                <div class="col-md-offset-3 col-md-auto">
+                    <button onclick="createUser()" class="btn btn-primary" type="submit">Update</button>
+                </div>
+            </div>*@
+
+        }
+    </div>
+    <div class="modal-footer">
+        &nbsp;
+        <button type="button" onclick="updateUser(@Model.ID)" class="btn btn-primary" data-dismiss="modal">Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+</form>
