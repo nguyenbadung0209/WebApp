@@ -29,7 +29,6 @@
             })
         });
 
-
         $('.btn-active').off('click').on('click', function (e) {
             e.preventDefault();
             var btn = $(this);

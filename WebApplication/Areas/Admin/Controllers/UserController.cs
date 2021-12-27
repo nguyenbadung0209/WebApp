@@ -21,21 +21,14 @@ namespace OnlineShop.Areas.Admin.Controllers
             ViewBag.SearchString = searchString;
             return View(model);
         }
-        [HttpGet]
-        public ActionResult Create()
+
+        public ActionResult CreateNewUser()
         {
-            return View();
+            var user = new User();
+            return PartialView("CreateUser", user);
         }
 
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            var user = new UserDao().ViewDatail(id);
-            return View(user);
-        }
-
-        [HttpPost]
-        public ActionResult Create(User user)
+        public ActionResult CreateUser(User user)
         {
             if (ModelState.IsValid)
             {
@@ -56,14 +49,63 @@ namespace OnlineShop.Areas.Admin.Controllers
                     long id = dao.Insert(user);
                     if (id > 0)
                     {
-                        SetAlert("Created Successfully", "success");
+                        //SetAlert("Created Successfully", "success");
                         TempData["SuccessMessage"] = "User " + user.Name + " Created Successfully";
-                        return RedirectToAction("Index", "User");
+                        return Json(true,JsonRequestBehavior.AllowGet);
                     }
                 }
-
             }
-            return View();
+            return Json(false,JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EditUser()
+        {
+            return PartialView();
+        }
+
+        //[HttpGet]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult Create(User user)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var dao = new UserDao();
+
+        //        if (dao.CheckUserName(user.UserName))
+        //        {
+        //            ModelState.AddModelError("", "The username is already taken");
+        //        }
+        //        else if (dao.CheckEmail(user.Email))
+        //        {
+        //            ModelState.AddModelError("", "Email already exists");
+        //        }
+        //        else
+        //        {
+        //            var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+        //            user.Password = encryptedMd5Pas;
+        //            long id = dao.Insert(user);
+        //            if (id > 0)
+        //            {
+        //                SetAlert("Created Successfully", "success");
+        //                TempData["SuccessMessage"] = "User " + user.Name + " Created Successfully";
+        //                return RedirectToAction("Index", "User");
+        //            }
+        //        }
+
+        //    }
+        //    return View();
+        //}
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var user = new UserDao().ViewDatail(id);
+            return View(user);
         }
 
         [HttpPost]
@@ -116,7 +158,6 @@ namespace OnlineShop.Areas.Admin.Controllers
 
             return Json(new { status = true });
         }
-
 
         [HttpPost]
         public JsonResult ChangeStatus(long id)

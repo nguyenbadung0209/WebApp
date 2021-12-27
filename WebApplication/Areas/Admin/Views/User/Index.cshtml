@@ -8,10 +8,19 @@
 
 
 @section header{
+
     <div class="panel panel-default">
 
         <div class="panel-heading" style="margin-left:-12px;margin-bottom:20px">
             User List
+        </div>
+
+        <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" id="myModelBody">
+
+                </div>
+            </div>
         </div>
 
         <!-- /.panel-heading -->
@@ -24,9 +33,9 @@
                     </div>
                     <div class="col-8" style="margin-left:-125px">
                         <button type="submit" class="btn btn-success">Search</button>
-                        <a class="btn btn-primary" href="/Admin/User/Create">Add new</a>
+                        @*<a class="btn btn-primary" href="/Admin/User/Create">Add new</a>*@
+                        <a class="btn btn-primary" onclick="createNewUser()">Add new</a>
                         <input id="btnDelete" class="btn btn-danger" type="submit" value="Delete" />
-
                     </div>
                 </div>
 
@@ -55,7 +64,8 @@
                                         <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
 
                                         <td>
-                                            <a href="/Admin/User/Edit/@item.ID">Edit</a>
+                                            @*<a href="/Admin/User/Edit/@item.ID">Edit</a>*@
+                                            <a href="#" onclick="editUser()">Edit</a>
                                             |
                                             @Ajax.ActionLink("Delete", "Delete", new { @id = item.ID }, new AjaxOptions
                                        {
@@ -63,6 +73,7 @@
                                            OnComplete = "$('#row_" + @item.ID + "').remove()",
                                            HttpMethod = "Delete"
                                        })
+
                                         </td>
                                     </tr>
                                 }
@@ -76,9 +87,43 @@
         </div>
         <!-- /.panel-body -->
     </div>
+
 }
 
 @section jsFooter{
+    <script type="text/javascript">
+        function createNewUser(id) {
+            $.get("/Admin/User/CreateNewUser", { id: id }, function (res) {
+                $("#myModelBody").html(res);
+                $("#myModal").modal('show');
+            })
+        }
+
+        function createUser() {
+            var modal = $("#myModal");
+            var form = $('form[name="userForm"]');
+
+            form.valid();
+            if (!form.valid()) {
+                return;
+            } else {
+                var data = form.serialize();
+                $.post("/Admin/User/CreateUser", data, function (res) {
+                    if (res == true) {
+                        modal.modal('hide');
+                        window.location.href = "/Admin/User/Index";
+                    }
+                })
+            }
+        }
+
+        function editUser(id) {
+            $.get("/Admin/User/EditUser", { id: id }, function (res) {
+                $("#myModelBody").html(res);
+                $("#myModal").modal('show');
+            })
+        }
+    </script>
 
     <script type="text/javascript">
         function openSuccessModal(strMessage) {
