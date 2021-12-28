@@ -56,7 +56,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                     }
                 }
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return PartialView("CreateUser",user);
         }
 
         [HttpGet]
@@ -92,7 +92,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Update user fail");
                 }
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return PartialView("EditUser", user);
         }
 
         //[HttpGet]

@@ -5,8 +5,6 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
-
-
 @section header{
 
     <div class="panel panel-default">
@@ -17,7 +15,7 @@
 
         <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content" id="myModelBody">
+                <div class="modal-content" id="myModalBody">
 
                 </div>
             </div>
@@ -92,52 +90,47 @@
 
 @section jsFooter{
     <script type="text/javascript">
+
         function createNewUser() {
             $.get("/Admin/User/CreateNewUser", function (res) {
-                $("#myModelBody").html(res);
+                $("#myModalBody").html(res);
                 $("#myModal").modal('show');
             })
         }
 
-        function createUser() {
-            var modal = $("#myModal");
+        function createUser() {           
             var form = $('form[name="userForm"]');
-
-            form.validate();
-            if (!form.valid()) {
-                return;
-            } else {
-                var data = form.serialize();
-                $.post("/Admin/User/CreateUser", data, function (res) {
-                    if (res == true) {
-                        window.location.href = "/Admin/User/Index";
-                    }
-                })
-            }
+            var data = form.serialize();
+            $.post("/Admin/User/CreateUser", data, function (res) {
+                if (res == true) {
+                    window.location.href = "/Admin/User/Index";
+                } else {
+                    $("#myModalBody").html(res);
+                    $("#myModal").modal('show');
+                }
+            })
         }
 
         function editUser(id) {
             $.get("/Admin/User/EditUser", { id: id }, function (res) {
-                $("#myModelBody").html(res);
+                $("#myModalBody").html(res);
                 $("#myModal").modal('show');
             })
         }
 
         function updateUser(id) {
-            
             var form = $('form[name="userForm"]');
-            var newForm = form.append('<input name="ID" value="' + id + '" /> ');           
-            form.validate();
-            if (!form.valid()) {
-                return;
-            } else {
-                var data = newForm.serialize();
-                $.post("/Admin/User/UpdateUser", data, function (res) {
-                    if (res == true) {
-                        window.location.href = "/Admin/User/Index";
-                    }
-                })
-            }
+            var newForm = form.add('<input name="ID" value="' + id + '" /> ');
+            var data = newForm.serialize();
+            $.post("/Admin/User/UpdateUser", data, function (res) {
+                if (res == true) {
+                    window.location.href = "/Admin/User/Index";
+                } else {
+                    $("#myModalBody").html(res);
+                    $("#myModal").modal('show');
+                }
+            })
+            
         }
     </script>
 
