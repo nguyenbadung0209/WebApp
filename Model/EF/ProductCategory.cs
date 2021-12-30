@@ -10,9 +10,11 @@ namespace Model.EF
     public partial class ProductCategory
     {
         public long ID { get; set; }
+
         [Required(ErrorMessage = "Name is requied")]
         [StringLength(250)]
         public string Name { get; set; }
+
         [Required(ErrorMessage = "MetaTitle is requied")]
         [StringLength(250)]
         public string MetaTitle { get; set; }
@@ -39,9 +41,10 @@ namespace Model.EF
 
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
-        [Required(ErrorMessage = "Status is requied")]
+  
         public bool Status { get; set; }
 
         public bool? ShowOnHome { get; set; }
+ 
     }
 }

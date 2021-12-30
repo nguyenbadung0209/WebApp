@@ -12,7 +12,7 @@
 
 @section header{
     <div class="panel panel-default">
-        <div class="panel-heading" style="margin-left:-12px;margin-bottom:20px">
+        <div style="margin-left:-12px;margin-bottom:20px">
             Product List
         </div>
 
@@ -40,8 +40,7 @@
                                 <tr>
                                     <th><input type="checkbox" name="allcheck" id="checkAll" /></th>
                                     <th>Name</th>
-                                    <th>NameCategory</th>
-                                    <th>MetaTitle</th>
+                                    <th>NameCategory</th> 
                                     <th>Code</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
@@ -52,12 +51,10 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-
                                     <tr id="row_@item.ID">
                                         <td><input type="checkbox" name="productDelete" class="productDelete" value="@item.ID" /></td>
                                         <td>@item.Name</td>
-                                        <td>@item.CateName</td>
-                                        <td>@item.CateMetaTitle</td>
+                                        <td>@item.CateName</td>     
                                         <td>@item.Code</td>
                                         <td>@String.Format(info, "{0:c1}", item.Price)</td>
                                         <td>@item.Quantity</td>

@@ -1,5 +1,6 @@
-﻿    using Model.Dao;
+﻿using Model.Dao;
 using Model.EF;
+using Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,72 +22,113 @@ namespace OnlineShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            SetViewBag();
-            return View();
+            ProductViewModel cate = new ProductViewModel();
+            var dao = new CategoryDao();
+            cate.CateCollection = dao.ListAll();
+            return View(cate);
         }
         [HttpPost]
-        public ActionResult Create(Product product)
-        {           
+        public ActionResult Create(ProductViewModel data)
+        {
+            var Catedao = new CategoryDao();
+            data.CateCollection = Catedao.ListAll();
             if (ModelState.IsValid)
             {
                 var dao = new ProductDao();
-                if (dao.CheckProductName(product.Name))
+                if (dao.CheckProductName(data.Name))
                 {
                     ModelState.AddModelError("", "Duplicate product name!");
                 }
-                else if (dao.CheckProductCode(product.Code))
+                else if (dao.CheckProductCode(data.Code))
                 {
                     ModelState.AddModelError("", "Duplicate product code!");
                 }
+                else if (data.Price == 0)
+                {
+                    ModelState.AddModelError("", "Please enter the price!");
+                }
+                else if (data.Quantity == 0)
+                {
+                    ModelState.AddModelError("", "Please enter the quantity!");
+                }
                 else
                 {
+                    var product = new Product();
+                    product.Name = data.Name;
+                    product.Code = data.Code;
+                    product.Description = data.Description;
+                    product.Price = data.Price;
+                    product.Quantity = data.Quantity;
+                    product.Status = data.Status;
+                    product.CategoryID = data.CategoryID;
                     long id = dao.Insert(product);
-                    SetViewBag(product.CategoryID);
                     if (id > 0)
                     {
                         TempData["SuccessMessage"] = "Product " + product.Name + " Created Successfully!";
                         return RedirectToAction("Index", "Product");
                     }
                 }
-            }           
-            return View();
-        }
-
-        public void SetViewBag(long? selectedId = null)
-        {
-            var dao = new CategoryDao();
-            ViewBag.CategoryID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
+            }
+            return View(data);
         }
 
         [HttpGet]
         public ActionResult Edit(long id)
         {
             var product = new ProductDao().ViewDetail(id);
-            SetViewBag(product.CategoryID);
-            return View(product);
+            ProductViewModel cate = new ProductViewModel();
+            cate.CategoryID = product.CategoryID;
+            cate.Name = product.Name;
+            cate.Code = product.Code;
+            cate.Description = product.Description;
+            cate.Price = product.Price;
+            cate.Quantity = product.Quantity;
+            cate.Status = product.Status;
+            var dao = new CategoryDao();
+            cate.CateCollection = dao.ListAll();
+            return View(cate);
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(ProductViewModel data)
         {
+            var Catedao = new CategoryDao();
+            data.CateCollection = Catedao.ListAll();
             if (ModelState.IsValid)
-            {
-                var dao = new ProductDao();
-
-                var result = dao.Update(product);
-                SetViewBag(product.CategoryID);
-                if (result)
+            {                
+                if (data.Price == 0)
                 {
-                    //SetAlert("Saved Successfully", "success");
-                    TempData["SuccessMessage"] = "Product " + product.Name + " Saved Successfully";
-                    return RedirectToAction("Index", "Product");
+                    ModelState.AddModelError("", "Please enter the price!");
+                }
+                else if (data.Quantity == 0)
+                {
+                    ModelState.AddModelError("", "Please enter the quantity!");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Update product fail");
+                    var product = new Product();
+                    product.ID = data.ID;
+                    product.Name = data.Name;
+                    product.Code = data.Code;
+                    product.Description = data.Description;
+                    product.Price = data.Price;
+                    product.Quantity = data.Quantity;
+                    product.Status = data.Status;
+                    product.CategoryID = data.CategoryID;
+                    var dao = new ProductDao();
+                    var result = dao.Update(product);
+                    if (result) {
+                        //SetAlert("Saved Successfully", "success");
+                        TempData["SuccessMessage"] = "Product " + product.Name + " Saved Successfully";
+                        return RedirectToAction("Index", "Product");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Update product fail");
+                    }
                 }
             }
-            return View();
+            return View(data);
         }
 
         [HttpPost]

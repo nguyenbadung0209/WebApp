@@ -1,4 +1,4 @@
-﻿@model Model.EF.Product
+﻿@model Model.ViewModel.ProductViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -6,10 +6,10 @@
 }
 
 @section header {
-    <h2>ADD NEW PRODUCT</h2>
+    <h2>EDIT PRODUCT</h2>
     <hr />
 
-    @using (Html.BeginForm("Create", "Product", FormMethod.Post))
+    @using (Html.BeginForm("Edit", "Product", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false, "", new { @class = "text-danger" });
@@ -22,18 +22,7 @@
 
             <div class="form-group" style="width : 1000px">
                 @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
-
                 @Html.TextBoxFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" }, @style = "width:200px" })
-
-
-            </div>
-
-            <div class="form-group" style="width : 1000px">
-                @Html.LabelFor(model => model.MetaTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                @Html.TextBoxFor(model => model.MetaTitle, new { htmlAttributes = new { @class = "form-control" }, @style = "width:200px" })
-
-
             </div>
 
             <div class="form-group" style="width : 1000px">
@@ -44,23 +33,9 @@
             </div>
 
             <div class="form-group" style="width : 1000px">
-                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, @style = "width:200px" })
-
-            </div>
-
-            <div class="form-group" style="width : 1000px">
                 @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
 
                 @Html.TextBoxFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" }, @style = "width:200px" })
-
-            </div>
-
-            <div class="form-group" style="width : 1000px">
-                @Html.LabelFor(model => model.PromotionPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                @Html.TextBoxFor(model => model.PromotionPrice, new { htmlAttributes = new { @class = "form-control" }, @style = "width:200px" })
 
             </div>
 
@@ -74,7 +49,7 @@
             <div class="form-group" style="width : 1000px">
                 @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
 
-                @Html.DropDownListFor(model => model.CategoryID, null, "--Select--", new { htmlAttributes = new { @class = "form-control" }, @style = "width:200px" })
+                @Html.DropDownListFor(model => model.CategoryID, new SelectList(Model.CateCollection, "ID", "Name"), "--Select--", new { htmlAttributes = new { @class = "form-control" }, @style = "width:200px" })
 
 
             </div>
@@ -88,7 +63,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-auto">
-                    <input class="btn btn-primary" type="submit" value="Create" />
+                    <input class="btn btn-primary" type="submit" value="Update" />
                 </div>
             </div>
         </div>
