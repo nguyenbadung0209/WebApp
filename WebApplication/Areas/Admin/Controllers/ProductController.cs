@@ -19,16 +19,18 @@ namespace OnlineShop.Areas.Admin.Controllers
             ViewBag.SearchString = searchString;
             return View(model);
         }
+
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult CreateNewProduct()
         {
             ProductViewModel cate = new ProductViewModel();
             var dao = new CategoryDao();
             cate.CateCollection = dao.ListAll();
-            return View(cate);
+            return PartialView("CreateProduct",cate);
         }
+
         [HttpPost]
-        public ActionResult Create(ProductViewModel data)
+        public ActionResult CreateProduct(ProductViewModel data)
         {
             var Catedao = new CategoryDao();
             data.CateCollection = Catedao.ListAll();
@@ -65,18 +67,19 @@ namespace OnlineShop.Areas.Admin.Controllers
                     if (id > 0)
                     {
                         TempData["SuccessMessage"] = "Product " + product.Name + " Created Successfully!";
-                        return RedirectToAction("Index", "Product");
+                        return Json(true, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            return View(data);
+            return PartialView("CreateProduct", data);
         }
 
         [HttpGet]
-        public ActionResult Edit(long id)
+        public ActionResult EditProduct(int id)
         {
             var product = new ProductDao().ViewDetail(id);
             ProductViewModel cate = new ProductViewModel();
+            cate.ID = product.ID;
             cate.CategoryID = product.CategoryID;
             cate.Name = product.Name;
             cate.Code = product.Code;
@@ -86,16 +89,16 @@ namespace OnlineShop.Areas.Admin.Controllers
             cate.Status = product.Status;
             var dao = new CategoryDao();
             cate.CateCollection = dao.ListAll();
-            return View(cate);
+            return PartialView("EditProduct", cate);
         }
 
         [HttpPost]
-        public ActionResult Edit(ProductViewModel data)
+        public ActionResult UpdateProduct(ProductViewModel data)
         {
             var Catedao = new CategoryDao();
             data.CateCollection = Catedao.ListAll();
             if (ModelState.IsValid)
-            {                
+            {
                 if (data.Price == 0)
                 {
                     ModelState.AddModelError("", "Please enter the price!");
@@ -117,10 +120,11 @@ namespace OnlineShop.Areas.Admin.Controllers
                     product.CategoryID = data.CategoryID;
                     var dao = new ProductDao();
                     var result = dao.Update(product);
-                    if (result) {
+                    if (result)
+                    {
                         //SetAlert("Saved Successfully", "success");
                         TempData["SuccessMessage"] = "Product " + product.Name + " Saved Successfully";
-                        return RedirectToAction("Index", "Product");
+                        return Json(true, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -128,8 +132,120 @@ namespace OnlineShop.Areas.Admin.Controllers
                     }
                 }
             }
-            return View(data);
+            return PartialView("EditProduct", data);
         }
+
+        //[HttpGet]
+        //public ActionResult Create()
+        //{
+        //    ProductViewModel cate = new ProductViewModel();
+        //    var dao = new CategoryDao();
+        //    cate.CateCollection = dao.ListAll();
+        //    return View(cate);
+        //}
+        //[HttpPost]
+        //public ActionResult Create(ProductViewModel data)
+        //{
+        //    var Catedao = new CategoryDao();
+        //    data.CateCollection = Catedao.ListAll();
+        //    if (ModelState.IsValid)
+        //    {
+        //        var dao = new ProductDao();
+        //        if (dao.CheckProductName(data.Name))
+        //        {
+        //            ModelState.AddModelError("", "Duplicate product name!");
+        //        }
+        //        else if (dao.CheckProductCode(data.Code))
+        //        {
+        //            ModelState.AddModelError("", "Duplicate product code!");
+        //        }
+        //        else if (data.Price == 0)
+        //        {
+        //            ModelState.AddModelError("", "Please enter the price!");
+        //        }
+        //        else if (data.Quantity == 0)
+        //        {
+        //            ModelState.AddModelError("", "Please enter the quantity!");
+        //        }
+        //        else
+        //        {
+        //            var product = new Product();
+        //            product.Name = data.Name;
+        //            product.Code = data.Code;
+        //            product.Description = data.Description;
+        //            product.Price = data.Price;
+        //            product.Quantity = data.Quantity;
+        //            product.Status = data.Status;
+        //            product.CategoryID = data.CategoryID;
+        //            long id = dao.Insert(product);
+        //            if (id > 0)
+        //            {
+        //                TempData["SuccessMessage"] = "Product " + product.Name + " Created Successfully!";
+        //                return RedirectToAction("Index", "Product");
+        //            }
+        //        }
+        //    }
+        //    return View(data);
+        //}
+
+        //[HttpGet]
+        //public ActionResult Edit(long id)
+        //{
+        //    var product = new ProductDao().ViewDetail(id);
+        //    ProductViewModel cate = new ProductViewModel();
+        //    cate.CategoryID = product.CategoryID;
+        //    cate.Name = product.Name;
+        //    cate.Code = product.Code;
+        //    cate.Description = product.Description;
+        //    cate.Price = product.Price;
+        //    cate.Quantity = product.Quantity;
+        //    cate.Status = product.Status;
+        //    var dao = new CategoryDao();
+        //    cate.CateCollection = dao.ListAll();
+        //    return View(cate);
+        //}
+
+        //[HttpPost]
+        //public ActionResult Edit(ProductViewModel data)
+        //{
+        //    var Catedao = new CategoryDao();
+        //    data.CateCollection = Catedao.ListAll();
+        //    if (ModelState.IsValid)
+        //    {                
+        //        if (data.Price == 0)
+        //        {
+        //            ModelState.AddModelError("", "Please enter the price!");
+        //        }
+        //        else if (data.Quantity == 0)
+        //        {
+        //            ModelState.AddModelError("", "Please enter the quantity!");
+        //        }
+        //        else
+        //        {
+        //            var product = new Product();
+        //            product.ID = data.ID;
+        //            product.Name = data.Name;
+        //            product.Code = data.Code;
+        //            product.Description = data.Description;
+        //            product.Price = data.Price;
+        //            product.Quantity = data.Quantity;
+        //            product.Status = data.Status;
+        //            product.CategoryID = data.CategoryID;
+        //            var dao = new ProductDao();
+        //            var result = dao.Update(product);
+        //            if (result) {
+        //                //SetAlert("Saved Successfully", "success");
+        //                TempData["SuccessMessage"] = "Product " + product.Name + " Saved Successfully";
+        //                return RedirectToAction("Index", "Product");
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError("", "Update product fail");
+        //            }
+        //        }
+        //    }
+        //    return View(data);
+        //}
 
         [HttpPost]
         public JsonResult DeleteSelectedCheckbox(string[] data)

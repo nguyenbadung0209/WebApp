@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<Model.ViewModel.ProductViewModel>
 @using PagedList.Mvc
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Product";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
@@ -16,6 +16,14 @@
             Product List
         </div>
 
+        <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" id="myModalBody">
+
+                </div>
+            </div>
+        </div>
+
         <!-- /.panel-heading -->
         <div class="panel-body">
             @using (Html.BeginForm("Index", "Product", FormMethod.Get))
@@ -26,8 +34,10 @@
                     </div>
                     <div class="col-8" style="margin-left:-120px">
                         <button type="submit" class="btn btn-success">Search</button>
-                        <a class="btn btn-primary" href="/Admin/Product/Create">Add Product</a>
-                        <a class="btn btn-info" href="/Admin/Category/Create">Add Category Product</a>
+                        @*<a class="btn btn-primary" href="/Admin/Product/Create">Add Product</a>
+                            <a class="btn btn-info" href="/Admin/Category/Create">Add Category Product</a>*@
+                        <a class="btn btn-primary" onclick="createNewProduct()">Add Product</a>
+                        <a class="btn btn-info" onclick="createNewProductCategory()">Add Category Product</a>
                         <input id="btnDelete" class="btn btn-danger" type="submit" value="Delete" />
 
                     </div>
@@ -40,7 +50,7 @@
                                 <tr>
                                     <th><input type="checkbox" name="allcheck" id="checkAll" /></th>
                                     <th>Name</th>
-                                    <th>NameCategory</th> 
+                                    <th>NameCategory</th>
                                     <th>Code</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
@@ -54,13 +64,14 @@
                                     <tr id="row_@item.ID">
                                         <td><input type="checkbox" name="productDelete" class="productDelete" value="@item.ID" /></td>
                                         <td>@item.Name</td>
-                                        <td>@item.CateName</td>     
+                                        <td>@item.CateName</td>
                                         <td>@item.Code</td>
                                         <td>@String.Format(info, "{0:c1}", item.Price)</td>
                                         <td>@item.Quantity</td>
                                         <td><a href="#" class="btn-active" data-id="@item.ID ">@(item.Status ? "Actived" : "Lock")</a></td>
                                         <td>
-                                            <a href="/Admin/Product/Edit/@item.ID">Edit</a>
+                                            @*<a href="/Admin/Product/Edit/@item.ID">Edit</a>*@
+                                            <a href="#" onclick="editProduct(@item.ID)">Edit</a>
                                         </td>
                                     </tr>
                                 }
@@ -76,6 +87,70 @@
     </div>
 }
 @section JsFooter{
+
+    <script type="text/javascript">
+
+        function createNewProduct() {
+            $.get("/Admin/Product/CreateNewProduct", function (res) {
+                $("#myModalBody").html(res);
+                $("#myModal").modal('show');
+            })
+        }
+
+        function createProduct() {
+            var form = $('form[name="productForm"]');
+            var data = form.serialize();
+            $.post("/Admin/Product/CreateProduct", data, function (res) {
+                if (res == true) {
+                    window.location.href = "/Admin/Product/Index";
+                } else {
+                    $("#myModalBody").html(res);
+                    $("#myModal").modal('show');
+                }
+            })
+        }
+
+        function createNewProductCategory() {
+            $.get("/Admin/Category/CreateNewProductCategory", function (res) {
+                $("#myModalBody").html(res);
+                $("#myModal").modal('show');
+            })
+        }
+
+        function createProductCategory() {
+            var form = $('form[name="productCategoryForm"]');
+            var data = form.serialize();
+            $.post("/Admin/Category/CreateProductCategory", data, function (res) {
+                if (res == true) {
+                    window.location.href = "/Admin/Product/Index";
+                } else {
+                    $("#myModalBody").html(res);
+                    $("#myModal").modal('show');
+                }
+            })
+        }
+
+        function editProduct(id) {
+            $.get("/Admin/Product/EditProduct", { id: id }, function (res) {
+                $("#myModalBody").html(res);
+                $("#myModal").modal('show');
+            })
+        }
+
+        function updateProduct(id) {
+            var form = $('form[name="productForm"]');
+            var newForm = form.add('<input name="ID" value="' + id + '" /> ');
+            var data = newForm.serialize();
+            $.post("/Admin/Product/UpdateProduct", data, function (res) {
+                if (res == true) {
+                    window.location.href = "/Admin/Product/Index";
+                } else {
+                    $("#myModalBody").html(res);
+                    $("#myModal").modal('show');
+                }
+            })
+        }
+    </script>
 
     <script type="text/javascript">
         function openSuccessModal(strMessage) {

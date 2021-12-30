@@ -17,13 +17,13 @@ namespace OnlineShop.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult CreateNewProductCategory()
         {
-            return View();
+            return PartialView("CreateProductCategory");
         }
 
         [HttpPost]
-        public ActionResult Create(ProductCategory category)
+        public ActionResult CreateProductCategory(ProductCategory category)
         {
             if (ModelState.IsValid)
             {
@@ -32,18 +32,19 @@ namespace OnlineShop.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Duplicate product category name!");
                 }
-                
+
                 else
                 {
                     long id = dao.Insert(category);
                     if (id > 0)
                     {
                         TempData["SuccessMessage"] = "Product Category " + category.Name + " Created Successfully!";
-                        return RedirectToAction("Index", "Product");
+                        return Json(true, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            return View();
+            return PartialView("CreateProductCategory", category);
         }
+
     }
 }

@@ -13,11 +13,10 @@ namespace Model.ViewModel
     {
         public long ID { get; set; }
 
-        [Display(Name = "Product Category")]
+        [Display(Name = "Category")]
         public long CategoryID { get; set; }
 
-        [Required(ErrorMessage = "Name is requied")]
-        [Display(Name = "Product Name")]
+        [Required(ErrorMessage = "Name is requied")]   
         [StringLength(250)]
         public string Name { get; set; }
 

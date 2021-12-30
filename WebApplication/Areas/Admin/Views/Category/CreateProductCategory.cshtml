@@ -1,0 +1,39 @@
+﻿@model Model.EF.ProductCategory
+
+<div class="modal-header">
+    <span>ADD PRODUCT CATEGORY</span>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("CreateProductCategory", "Category", FormMethod.Post, new { @id = "myForm", @name = "productCategoryForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" });
+
+        <div class="form-group" style="width : 1000px">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px" })
+        </div>
+
+        <div class="form-group" style="width : 1000px">
+            @Html.LabelFor(model => model.MetaTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(model => model.MetaTitle, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px" })
+        </div>
+
+        <div class="form-group" style="width : 1000px">
+            @Html.LabelFor(model => model.MetaDescriptions, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(model => model.MetaDescriptions, new { htmlAttributes = new { @class = "form-control" }, @style = "width:250px" })
+        </div>
+
+        <div class="form-group" style="width : 1000px">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Status)
+        </div>
+
+        <div class="modal-footer">
+            &nbsp;
+            <button type="button" onclick="createProductCategory()" class="btn btn-primary">Create</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+    }
+</div>
