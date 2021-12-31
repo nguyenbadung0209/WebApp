@@ -66,7 +66,7 @@ namespace Model.Dao
                 model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
             }
 
-            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize); 
         }
 
         public User GetById(string userName)

@@ -71,7 +71,7 @@
 
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">@RenderSection("header", required: true)</h1>
+                    @RenderSection("header", required: true)
 
                 </div>
                 <!-- /.container-fluid -->
@@ -126,10 +126,13 @@
     <!-- Core plugin JavaScript-->
     <script src="/assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="/Scripts/jquery.validate.min.js"></script>
-    
+
     <!-- Custom scripts for all pages-->
     <script src="/assets/admin/js/sb-admin-2.js"></script>
     <script src="/assets/admin/js/sb-admin-2.min.js"></script>
+    <script src="/assets/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/admin/js/demo/datatables-demo.js"></script>
     <script type="text/javascript">
         $('#AlertBox').removeClass('hide');
         $('#AlertBox').delay(1000).slideUp(500);
