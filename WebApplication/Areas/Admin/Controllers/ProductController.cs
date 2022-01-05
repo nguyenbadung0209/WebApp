@@ -15,7 +15,11 @@ namespace OnlineShop.Areas.Admin.Controllers
         public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
         {
             var dao = new ProductDao();
+            int totalProduct = dao.CountProduct(searchString);
+            float numberPage = (float)totalProduct / pageSize;
             var model = dao.ListAllPaging(searchString, page, pageSize);
+            ViewBag.pageCurrent = page;
+            ViewBag.numberPage = (int)Math.Ceiling(numberPage);
             ViewBag.SearchString = searchString;
             return View(model);
         }

@@ -88,8 +88,32 @@ namespace Model.Dao
             {
                 model = model.Where(x => x.Name.Contains(searchString) || x.CateName.Contains(searchString));
             }
+            int start = (page - 1) * pageSize;
+            var dataProduct = model.OrderByDescending(x => x.ID).Skip(start).Take(pageSize);
+            return dataProduct.ToList();
+        }
 
-            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
+        public int CountProduct(string searchString)
+        {
+            IQueryable<ProductViewModel> model = from product in db.Products
+                                                 join productCategory in db.ProductCategories
+                                                 on product.CategoryID equals productCategory.ID
+                                                 select new ProductViewModel()
+                                                 {
+                                                     CateMetaTitle = productCategory.MetaTitle,
+                                                     CateName = productCategory.Name,
+                                                     Status = product.Status,
+                                                     ID = product.ID,
+                                                     Name = product.Name,
+                                                     Code = product.Code,
+                                                     Price = product.Price,
+                                                     Quantity = product.Quantity
+                                                 };
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Name.Contains(searchString) || x.CateName.Contains(searchString));
+            }
+            return model.Count();
         }
 
         public List<string> ListName(string keyword)
@@ -129,7 +153,7 @@ namespace Model.Dao
         {
             totalRecord = db.Products.Where(x => x.Name.Contains(keyword)).Count();
             var model = db.Products.Where(x => x.Name.Contains(keyword));
-            
+
             model.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
             return model.ToList();
         }

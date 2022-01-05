@@ -9,6 +9,7 @@ using OnlineShop.Common;
 using PagedList;
 using System.Web.Script.Serialization;
 
+
 namespace OnlineShop.Areas.Admin.Controllers
 {
     public class UserController : BaseController
@@ -17,7 +18,11 @@ namespace OnlineShop.Areas.Admin.Controllers
         public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
         {
             var dao = new UserDao();
-            var model = dao.ListAllPaging(searchString, page, pageSize);
+            int totalUser = dao.CountUser(searchString); 
+            float numberPage = (float)totalUser / pageSize;              
+            var model = dao.ListAllPaging(searchString, page ,pageSize);   
+            ViewBag.pageCurrent = page;
+            ViewBag.numberPage = (int)Math.Ceiling(numberPage);
             ViewBag.SearchString = searchString;
             return View(model);
         }
@@ -56,7 +61,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                     }
                 }
             }
-            return PartialView("CreateUser",user);
+            return PartialView("CreateUser", user);
         }
 
         [HttpGet]

@@ -64,9 +64,20 @@ namespace Model.Dao
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
-            }
+            }           
+            int start = (page - 1) * pageSize;
+            var dataUser = model.OrderByDescending(x => x.ID).Skip(start).Take(pageSize);
+            return dataUser.ToList();
+        }
 
-            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize); 
+        public int CountUser(string searchString)
+        {
+            IQueryable<User> model = db.Users;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
+            }
+            return model.Count();
         }
 
         public User GetById(string userName)
