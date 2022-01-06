@@ -1,0 +1,68 @@
+﻿@model OnlineShop.Models.PaymentModel
+
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{Html.RenderAction("CartItem", "Cart"); }
+
+
+<div class="row py-5">
+    <form class="col-md-9 m-auto" method="post" role="form">
+        @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.ShipName, htmlAttributes: new { @style = "padding-left: 350px" } )
+                    <div class="col-md-10" style="padding-left:350px">
+                        @Html.TextBoxFor(model => model.ShipName, new { htmlAttributes = new { @class = "form-control" }, @style = "width:420px" })
+                        @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShipMobile, htmlAttributes: new { @style = "padding-left: 350px" })
+                    <div class="col-md-10" style="padding-left:350px">
+                        @Html.TextBoxFor(model => model.ShipMobile, new { htmlAttributes = new { @class = "form-control" }, @style = "width:420px" })
+                        @Html.ValidationMessageFor(model => model.ShipMobile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @style = "padding-left: 350px" })
+                    <div class="col-md-10" style="padding-left:350px">
+                        @Html.TextBoxFor(model => model.ShipAddress, new { htmlAttributes = new { @class = "form-control" }, @style = "width:420px" })
+                        @Html.ValidationMessageFor(model => model.ShipAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShipEmail, htmlAttributes: new { @style = "padding-left: 350px" })
+                    <div class="col-md-10" style="padding-left:350px">
+                        @Html.TextBoxFor(model => model.ShipEmail, new { htmlAttributes = new { @class = "form-control" }, @style = "width:420px" })
+                        @Html.ValidationMessageFor(model => model.ShipEmail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10" style="padding-left: 520px; padding-top: 30px">
+                        <button type="submit" class="btn btn-success btn-block px-3">Send Order</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+

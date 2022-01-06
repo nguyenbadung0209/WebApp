@@ -23,6 +23,21 @@ namespace Model.Dao
             return entity.ID;
         }
 
+        //public long InsertForFacebook(User entity)
+        //{
+        //    var user = db.Users.SingleOrDefault(x => x.UserName == entity.UserName);
+        //    if (user == null)
+        //    {
+        //        db.Users.Add(entity);
+        //        db.SaveChanges();
+        //        return entity.ID;
+        //    }
+        //    else
+        //    {
+        //        return user.ID;
+        //    }
+        //}
+
         public bool Update(User entity)
         {
             try
@@ -34,7 +49,6 @@ namespace Model.Dao
                     user.Password = entity.Password;
                 }
                 user.Address = entity.Address;
-                user.Email = entity.Email;
                 user.Phone = entity.Phone;
                 user.ModifiedBy = entity.ModifiedBy;
                 user.ModifiedDate = DateTime.Now;
@@ -50,9 +64,20 @@ namespace Model.Dao
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
-            }
+            }           
+            int start = (page - 1) * pageSize;
+            var dataUser = model.OrderByDescending(x => x.ID).Skip(start).Take(pageSize);
+            return dataUser.ToList();
+        }
 
-            return model.OrderByDescending(x => x.ID).ToPagedList(page, pageSize);
+        public int CountUser(string searchString)
+        {
+            IQueryable<User> model = db.Users;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
+            }
+            return model.Count();
         }
 
         public User GetById(string userName)
@@ -108,6 +133,15 @@ namespace Model.Dao
             }
             catch (Exception) { return false; }
 
+        }
+
+        public bool CheckUserName(string userName)
+        {
+            return db.Users.Count(x => x.UserName == userName) > 0;
+        }
+        public bool CheckEmail(string email)
+        {
+            return db.Users.Count(x => x.Email == email) > 0;
         }
     }
 }

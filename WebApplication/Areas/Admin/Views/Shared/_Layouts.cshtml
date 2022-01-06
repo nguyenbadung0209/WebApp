@@ -62,14 +62,16 @@
                         </div>
                     </div>
                     <!--create show infor-->
-                    <!--@if (TempData["AlertMessage"] != null)
-        {
-            <div id="AlertBox" class="alert @TempData["AlertType"] hide">
-                @TempData["AlertMessage"]
-            </div>
-        }-->
+                    @if (TempData["AlertMessage"] != null)
+                    {
+                        <div id="AlertBox" class="alert @TempData["AlertType"] hide">
+                            @TempData["AlertMessage"]
+                        </div>
+                    }
+
+
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">@RenderSection("header", required: true)</h1>
+                    @RenderSection("header", required: true)
 
                 </div>
                 <!-- /.container-fluid -->
@@ -80,7 +82,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Your Website 2021</span>
                     </div>
                 </div>
             </footer>
@@ -117,15 +119,24 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+    <link href="/assets/client/css/bootstrap-theme.css" rel="stylesheet" />
     <script src="/assets/admin/vendor/jquery/jquery.min.js"></script>
     <script src="/assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="/assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="/assets/admin/js/sb-admin-2.js"></script>
     <script src="/assets/admin/js/sb-admin-2.min.js"></script>
+    <script src="/assets/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/admin/js/demo/datatables-demo.js"></script>
+    <script type="text/javascript">
+        $('#AlertBox').removeClass('hide');
+        $('#AlertBox').delay(1000).slideUp(500);
+    </script>
     @RenderSection("jsFooter", required: false)
 </body>
 

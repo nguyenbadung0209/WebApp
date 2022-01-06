@@ -15,14 +15,27 @@ namespace Model.Dao
             db = new OnlineShopDbContext();
         }
 
-        public List<Category> ListAll()
+
+        public List<ProductCategory> ListAll()
         {
-            return db.Categories.Where(x => x.Status == true).ToList();
+            return db.ProductCategories.Where(x => x.Status == true).ToList();
+        }
+
+        public long Insert(ProductCategory entity)
+        {
+            db.ProductCategories.Add(entity);
+            db.SaveChanges();
+            return entity.ID;
         }
 
         public ProductCategory ViewDetail(long id)
         {
             return db.ProductCategories.Find(id);
+        }
+
+        public bool CheckProductCategoryName(string Name)
+        {
+            return db.ProductCategories.Count(x => x.Name == Name) > 0;
         }
     }
 }

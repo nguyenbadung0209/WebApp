@@ -15,7 +15,7 @@ namespace OnlineShop.Areas.Admin.Models
         [Required(ErrorMessage = "Please enter password")]
         [StringLength(32, ErrorMessage = "The maximum length of the password is 32 characters")]
         public string PassWord { get; set; }
-
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
     }
 }

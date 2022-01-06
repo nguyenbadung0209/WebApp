@@ -3,6 +3,32 @@
         user.registerEvent();
     },
     registerEvent: function () {
+
+        $('#btnDelete').off('click').on('click', function (e) {
+            e.preventDefault();
+            var boxData = new Array();
+            $("input[name='userDelete']:checked").each(function () {
+                boxData.push($(this).val());                            
+            });
+                   
+            $.ajax({
+                url: "/Admin/User/DeleteSelectedCheckbox",
+                data: { data: boxData },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        $("input[name='userDelete']:checked").each(function () {
+                            $("#row_" + $(this).val()).remove();
+                        });
+                        alert("Delete Success...");
+                    } else {
+                        alert("Delete Error...");
+                    }
+                }
+            })
+        });
+
         $('.btn-active').off('click').on('click', function (e) {
             e.preventDefault();
             var btn = $(this);
@@ -11,7 +37,7 @@
                 url: "/Admin/User/ChangeStatus",
                 data: { id: id },
                 dataType: "json",
-                type : "POST",
+                type: "POST",
                 success: function (response) {
                     if (response.status == true) {
                         btn.text('Actived');
@@ -21,6 +47,8 @@
                 }
             });
         });
+
+        
     }
 }
 user.init();

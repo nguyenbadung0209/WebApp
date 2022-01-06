@@ -7,6 +7,10 @@
     var relatedProducts = (List<Model.EF.Product>)ViewBag.RelatedProducts;
 }
 
+@{
+    var session = (OnlineShop.Common.UserLogin)Session[OnlineShop.Common.CommonConstanst.USER_SESSION];
+}
+
 <!-- Open Content -->
 <section class="bg-light">
     <div class="container pb-5">
@@ -111,34 +115,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="h2">@Model.Name</h1>
-                        <p class="h3 py-2">@(Model.Price.HasValue? Model.Price.Value.ToString("NO") : "Contact")</p>
-                        <p class="py-2">
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
-                        </p>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Brand:</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted"><strong>Easy Wear</strong></p>
-                            </li>
-                        </ul>
+                        <p class="h3 py-2">@(Model.Price)$</p>
+
 
                         <h6>Description:</h6>
                         <p>@Model.Description</p>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Avaliable Color :</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted"><strong>White / Black</strong></p>
-                            </li>
-                        </ul>
+
 
                         <h6>Specification:</h6>
                         <ul class="list-unstyled pb-3">
@@ -175,10 +157,10 @@
                             </div>
                             <div class="row pb-3">
                                 <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
-                                </div>
-                                <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+                                    @if (session != null)
+                                    {<input type=button onClick="parent.location='/addcart?customerId=@session.UserId&productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Add to Cart" />}
+                                    else
+                                    {<input type=button onClick="parent.location='/addcart?customerId=0&productId=@Model.ID&quantity=1'" class="btn btn-success btn-lg" name="submit" value="Add to Cart" />}
                                 </div>
                             </div>
                         </form>
@@ -241,13 +223,9 @@
                     </div>
                 </div>
             }
-
-
-
-
         </div>
-
-
     </div>
 </section>
+
+
 <!-- End Article -->

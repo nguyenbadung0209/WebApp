@@ -44,29 +44,30 @@
                                     </div>
                                     @using (Html.BeginForm("Login", "Login", FormMethod.Post))
                                     {
-                                        @Html.ValidationSummary(false, "", new { @class = "text-danger" });
-                                        
-                                        <h5 class="h6 text-gray-900 mb-4">Username</h5>
-                                        <div class="form-group">
-                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Enter the username" })
+                                        @Html.ValidationSummary(false, "", new { @class = "text-danger", @style = "padding-left: 45px" });
 
+                                        <h5 class="h6 text-gray-900 mb-4" style="margin-left: 70px ">Username</h5>
+                                        <div class="form-group" style="width: 280px; margin-top: 20px; margin-left: 70px">
+                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Enter the username" })
                                         </div>
-                                        
-                                        <h5 class="h6 text-gray-900 mb-4">Password</h5>
-                                        <div class="form-group">
+
+                                        <h5 class="h6 text-gray-900 mb-4" style="margin-top: 20px; margin-left: 70px ">Password</h5>
+                                        <div class="form-group" style="width: 280px; margin-top: 20px; margin-left: 70px ">
                                             @Html.PasswordFor(model => model.PassWord, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Enter the password" })
 
                                         </div>
-                                        <div class="custom-control custom-checkbox small">
+                                        <div class="custom-control custom-checkbox small" style="margin-top: 20px; margin-left: 48px ">
                                             <label>
-                                                @Html.CheckBoxFor(model => model.RememberMe) Remember Me
+                                                @Html.CheckBoxFor(model => model.RememberMe, new {  @style = "height: 12px" }) Remember me
                                             </label>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </button>
-                                        
+                                        <div style="padding-left: 170px; margin-top: 25px ">
+                                            <button type="submit" class="btn btn-primary" style="height: 45px; width: 90px;">
+                                                Login
+                                            </button>
+                                        </div>
+
 
                                     }
                                 </div>

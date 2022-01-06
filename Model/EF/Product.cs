@@ -11,15 +11,20 @@ namespace Model.EF
     {
         public long ID { get; set; }
 
+        [Required(ErrorMessage ="Name is requied")]
+        [Display(Name = "Product Name")]
         [StringLength(250)]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Code is requied")]
         [StringLength(10)]
         public string Code { get; set; }
-
+    
+        [Display(Name = "Title")]
         [StringLength(250)]
         public string MetaTitle { get; set; }
 
+        [Required(ErrorMessage = "Description is requied")]
         [StringLength(500)]
         public string Description { get; set; }
 
@@ -29,15 +34,21 @@ namespace Model.EF
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
 
-        public decimal? Price { get; set; }
+        [Required(ErrorMessage = "Price is requied")]
+        public decimal Price { get; set; }
 
+        [Display(Name = "Promotion Price")]
         public decimal? PromotionPrice { get; set; }
 
-        public bool? IncludedVAT { get; set; }
+        [Display(Name = "VAT")]
+        public bool IncludedVAT { get; set; }
 
+        [Required(ErrorMessage = "Quantity is requied")]
         public int Quantity { get; set; }
 
-        public long? CategoryID { get; set; }
+        [Required(ErrorMessage = "Category is requied")]
+        [Display(Name = "Product Category")]
+        public long CategoryID { get; set; }
 
         [Column(TypeName = "ntext")]
         public string Detail { get; set; }
@@ -60,7 +71,7 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
 
         public DateTime? TopHot { get; set; }
 

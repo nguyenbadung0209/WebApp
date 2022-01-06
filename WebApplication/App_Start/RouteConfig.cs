@@ -13,6 +13,9 @@ namespace OnlineShop
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.IgnoreRoute("{*botdetect}",
+     new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
+
             routes.MapRoute(
                name: "Product Category",
                url: "product/{metatitle}-{cateId}",
@@ -44,7 +47,56 @@ namespace OnlineShop
             routes.MapRoute(
              name: "Contact",
              url: "contact",
-             defaults: new { controller = "Contact", action = "Index", id = UrlParameter.Optional },
+             defaults: new { controller = "Contact", action = "Contact", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Cart",
+             url: "cart",
+             defaults: new { controller = "Cart", action = "Index", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Payment",
+             url: "payment",
+             defaults: new { controller = "Cart", action = "Payment", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Add Cart",
+             url: "addcart",
+             defaults: new { controller = "Cart", action = "AddItem", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Payment Sussess",
+             url: "complete",
+             defaults: new { controller = "Cart", action = "Sussess", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Login",
+             url: "login",
+             defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Register",
+             url: "register",
+             defaults: new { controller = "User", action = "Register", id = UrlParameter.Optional },
+             new[] { "OnlineShop.Controllers" }
+         );
+
+            routes.MapRoute(
+             name: "Search",
+             url: "search",
+             defaults: new { controller = "Product", action = "Search", id = UrlParameter.Optional },
              new[] { "OnlineShop.Controllers" }
          );
 

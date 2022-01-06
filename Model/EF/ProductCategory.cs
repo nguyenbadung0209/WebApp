@@ -11,9 +11,12 @@ namespace Model.EF
     {
         public long ID { get; set; }
 
+        [Required(ErrorMessage = "Name is requied")]
         [StringLength(250)]
         public string Name { get; set; }
 
+        [Display(Name = "Title")]
+        [Required(ErrorMessage = "Title is requied")]
         [StringLength(250)]
         public string MetaTitle { get; set; }
 
@@ -37,11 +40,13 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaKeywords { get; set; }
 
+        [Display(Name = "Description")]
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
-
-        public bool? Status { get; set; }
+  
+        public bool Status { get; set; }
 
         public bool? ShowOnHome { get; set; }
+ 
     }
 }

@@ -6,11 +6,15 @@
 
         <div class="topbar-divider d-none d-sm-block"></div>
 
+
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                @{
+                    var session = (OnlineShop.Common.UserLogin)Session[OnlineShop.Common.CommonConstanst.USER_SESSION];
+                }
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
                 <img class="img-profile rounded-circle"
                      src="/assets/admin/img/undraw_profile.svg">
             </a>
