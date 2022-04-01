@@ -17,6 +17,7 @@
                 var quantity = parseInt($(item).val());
                 var productID = parseInt($(item).data('id'));
                 var priceProduct = parseInt($('.priceDefault_' + productID).data('id'));
+                if (quantity <= 0) { quantity = 1; }
                 $(".resultPrice_" + productID).text(quantity * priceProduct + ' $');
                 total += (quantity*priceProduct);
             });
