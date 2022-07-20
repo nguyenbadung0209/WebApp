@@ -3,7 +3,7 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
     //var slides = (List<Model.EF.Slide>)ViewBag.Slides;
-    var listNewProducts = (List<Model.EF.Product>)ViewBag.NewProducts;
+    //var listNewProducts = (List<Model.EF.Product>)ViewBag.NewProducts;
     var listFeatureProduct = (List<Model.EF.Product>)ViewBag.FeatureProducts;
 }
 
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row">
-        @foreach (var item in listNewProducts)
+        @*@foreach (var item in listNewProducts)
         {
             var url = "/detail/" + item.MetaTitle + "-" + item.ID;
             <div class="col-12 col-md-4 p-5 mt-3">
@@ -27,7 +27,7 @@
                 <h5 class="text-center mt-3 mb-3">@item.Name</h5>
                 <p class="text-center"><a href="@url" class="btn btn-success">Go Shop</a></p>
             </div>
-        }
+        }*@
     </div>
 </section>
 <!-- End Categories of The Month -->

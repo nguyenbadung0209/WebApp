@@ -89,8 +89,8 @@ namespace Model.Dao
                 model = model.Where(x => x.Name.Contains(searchString) || x.CateName.Contains(searchString));
             }
             int start = (page - 1) * pageSize;
-            var dataProduct = model.OrderByDescending(x => x.ID).Skip(start).Take(pageSize);
-            return dataProduct.ToList();
+            var dataProduct = model.OrderByDescending(x => x.ID).Skip(start).Take(pageSize).ToList();
+            return dataProduct;
         }
 
         public int CountProduct(string searchString)
